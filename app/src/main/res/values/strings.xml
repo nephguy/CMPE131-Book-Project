@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CmpeBookProject</string>
+    <string name="title_activity_testing">TestingActivity</string>
+</resources>
