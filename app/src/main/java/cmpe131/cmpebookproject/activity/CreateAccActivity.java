@@ -1,13 +1,15 @@
-package cmpe131.cmpebookproject;
+package cmpe131.cmpebookproject.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import cmpe131.cmpebookproject.R;
+
+public class CreateAccActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_createacc);
     }
 }
