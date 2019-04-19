@@ -2,6 +2,7 @@ package cmpe131.cmpebookproject;
 
 public class Book {
 
+
     private String title;
     private String author;
     private String publisher;
@@ -39,5 +40,6 @@ public class Book {
     public ReadingLevel getReadingLevel() {return readingLevel;}
     public void setReadingLevel(ReadingLevel readingLevel) {this.readingLevel = readingLevel;}
 
+    }
 
-}
+
