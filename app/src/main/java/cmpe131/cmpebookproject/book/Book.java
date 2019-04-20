@@ -1,8 +1,11 @@
 package cmpe131.cmpebookproject.book;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import cmpe131.cmpebookproject.user.ReadingLevel;
 
-public class Book {
+public class Book implements Parcelable {
 
 
     private String title;
@@ -42,6 +45,16 @@ public class Book {
     public ReadingLevel getReadingLevel() {return readingLevel;}
     public void setReadingLevel(ReadingLevel readingLevel) {this.readingLevel = readingLevel;}
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }
 
 

@@ -1,5 +1,8 @@
 package cmpe131.cmpebookproject.user;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,7 +10,7 @@ import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
 
-public class User implements Serializable {
+public class User implements Serializable, Parcelable {
     private String name;
     private int passwordHash;
     private Gender gender;
@@ -35,7 +38,7 @@ public class User implements Serializable {
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
     public int getPasswordHash() {return passwordHash;}
-    public void setPasswordHash(int passwordHash) {this.passwordHash = passwordHash;}
+    public void setPassword(String password) {this.passwordHash = password.hashCode();}
     public Gender getGender() {return gender;}
     public void setGender(Gender gender) {this.gender = gender;}
     public int getAge() {return age;}
@@ -54,4 +57,13 @@ public class User implements Serializable {
     public void setCustomLists(ArrayList<BookList> customLists) {this.customLists = customLists;}
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }
