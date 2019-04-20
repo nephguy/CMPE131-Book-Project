@@ -1,4 +1,4 @@
-package cmpe131.cmpebookproject;
+package cmpe131.cmpebookproject.book;
 
 import cmpe131.cmpebookproject.user.ReadingLevel;
 
@@ -42,6 +42,6 @@ public class Book {
     public ReadingLevel getReadingLevel() {return readingLevel;}
     public void setReadingLevel(ReadingLevel readingLevel) {this.readingLevel = readingLevel;}
 
-    }
+}
 
 

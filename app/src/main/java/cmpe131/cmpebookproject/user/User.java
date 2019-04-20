@@ -1,12 +1,13 @@
 package cmpe131.cmpebookproject.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import cmpe131.cmpebookproject.Book;
-import cmpe131.cmpebookproject.BookList;
-import cmpe131.cmpebookproject.Genre;
+import cmpe131.cmpebookproject.book.Book;
+import cmpe131.cmpebookproject.book.BookList;
+import cmpe131.cmpebookproject.book.Genre;
 
-public class User {
+public class User implements Serializable {
     private String name;
     private int passwordHash;
     private Gender gender;
@@ -53,5 +54,4 @@ public class User {
     public void setCustomLists(ArrayList<BookList> customLists) {this.customLists = customLists;}
 
 
-    
 }

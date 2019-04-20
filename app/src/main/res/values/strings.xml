@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CmpeBookProject</string>
     <string name="title_activity_testing">TestingActivity</string>
+    <string name="database_user_foldername">Users</string>
 </resources>

@@ -1,4 +1,4 @@
-package cmpe131.cmpebookproject;
+package cmpe131.cmpebookproject.book;
 
 public enum Genre {
     MYSTERY, FICTION, SCIFI, COMEDY, ROMANCE, NONFICTION, SELFHELP, COOKING, BIOGRAPHY, ACADEMIC, SPORTS, YOUNGADULT, OTHER;
