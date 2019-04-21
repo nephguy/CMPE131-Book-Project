@@ -31,7 +31,13 @@ public class Recommender {
         this.numberOfBooksRecommended = numberOfBooksRecommended;
     }
 
+    /**
+     * 
+     */
     public void produceRecommendedBooks(){
+        filterBooks();
+        makeRecommendedBookList();
+        putRecommendedBooksInOrder();
 
     }
 
