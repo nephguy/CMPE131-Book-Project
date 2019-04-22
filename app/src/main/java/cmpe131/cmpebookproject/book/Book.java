@@ -82,6 +82,6 @@ public class Book implements Parcelable {
             }
         };
     }
-}
+
 
 
