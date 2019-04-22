@@ -2,10 +2,13 @@ package cmpe131.cmpebookproject.database;
 
 import android.content.Context;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.book.Book;
+import cmpe131.cmpebookproject.book.Genre;
+import cmpe131.cmpebookproject.user.ReadingLevel;
 import cmpe131.cmpebookproject.user.User;
 
 public class DbHelper {
@@ -38,8 +41,17 @@ public class DbHelper {
      * parses a String of book data and turns it into a Book object **/
     private Book parseBook (String bookData) {
 
+        String title = bookData.substring(0,bookData.indexOf(',')); // trims and returns a substring from the start of the string up to the first comma
+        String author = bookData.substring(0,bookData.indexOf(','));
+        String publisher = bookData.substring(0,bookData.indexOf(','));
+        int yearPublished = Integer.parseInt( bookData.substring(0,bookData.indexOf(',')) ); // does the same, but parses the integer out of it.
+        String isbn = ;
+        Genre genre = ;
+        int numPages = ;
+        ReadingLevel readingLevel = ;
 
-
+        Book newBook = new Book (title, author, publisher, yearPublished, isbn, genre, numPages, readingLevel);
+        return newBook;
     }
 
 
@@ -49,15 +61,23 @@ public class DbHelper {
      * if the books have already been loaded from the database, return them
      * otherwise, retrieve them, parse them into Book objects, store them in the ArrayList allBooks, and return it
      *
-     * you will need to use the parseBook(String) method here **/
+     * you will need to use the parseBook(String) method here
+     *
+     * this method is finished now, but try to understand it**/
     public ArrayList<Book> getAllBooks() {
         if (allBooks != null)
             return allBooks;
         else
             allBooks = new ArrayList<>();
 
-
-
+        ArrayList<String> entireFile = null;
+        try {
+            entireFile = bookDb.readEntireFile();
+        } catch (IOException e) {e.printStackTrace();}
+        
+        for (int i = 0; i < entireFile.size(); i++) {
+            allBooks.add(parseBook(entireFile.get(i)));
+        }
 
         return allBooks;
     }
