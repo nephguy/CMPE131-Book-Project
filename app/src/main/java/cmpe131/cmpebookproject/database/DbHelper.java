@@ -11,6 +11,7 @@ import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.user.ReadingLevel;
 import cmpe131.cmpebookproject.user.User;
 
+
 public class DbHelper {
 
     private Context context;
@@ -43,14 +44,15 @@ public class DbHelper {
 
         String title = bookData.substring(0,bookData.indexOf(',')); // trims and returns a substring from the start of the string up to the first comma
         String author = bookData.substring(0,bookData.indexOf(','));
+        int isbn = Integer.parseInt( bookData.substring(0,bookData.indexOf(',')));
+        int avg_rating = Integer.parseInt( bookData.substring(0,bookData.indexOf(',')));
         String publisher = bookData.substring(0,bookData.indexOf(','));
+        int numPages = Integer.parseInt( bookData.substring(0,bookData.indexOf(',')));
         int yearPublished = Integer.parseInt( bookData.substring(0,bookData.indexOf(',')) ); // does the same, but parses the integer out of it.
-        String isbn = ;
-        Genre genre = ;
-        int numPages = ;
-        ReadingLevel readingLevel = ;
+        Genre genre = bookData.substring(0,bookData.indexOf(','));
+        // NOt needed(not in CSV)ReadingLevel readingLevel = ;
 
-        Book newBook = new Book (title, author, publisher, yearPublished, isbn, genre, numPages, readingLevel);
+        Book newBook = new Book (title, author, isbn, publisher, yearPublished, genre, numPages, readingLevel);
         return newBook;
     }
 
@@ -75,7 +77,7 @@ public class DbHelper {
             entireFile = bookDb.readEntireFile();
         } catch (IOException e) {e.printStackTrace();}
         
-        for (int i = 0; i < entireFile.size(); i++) {
+        for (int i = 1; i < entireFile.size(); i++) {
             allBooks.add(parseBook(entireFile.get(i)));
         }
 
@@ -89,9 +91,16 @@ public class DbHelper {
      * if the user database contains a user with the specified name and password, return their user object
      * otherwise, return a null object to let the app know this was an invalid user/password combination **/
     public User getUser(String username, int password) {
-
-
-
+        for(int i = 0; i < allUsers.size(); i++) {
+            if(allUsers(i).username == username && allUsers(i).password == password) {
+                return allUsers(i);
+            }
+            if(allUsers(i).username == username && all Users(i) != password) {
+                System.out.print("Wrong passowrd for " + username + ". please try again");
+                i--;
+            }
+        }
+        throw new IllegalArgumentException("Account belonging to " + username + " was not found");
     }
 
 
@@ -104,7 +113,6 @@ public class DbHelper {
      * example of throwing an exception:
      *    throw new IllegalArgumentException ("reason for the exception") **/
     public void addNewUser (User user) throws IllegalArgumentException {
-
 
 
     }
