@@ -74,10 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 String newUserName = data.getStringExtra(INTENT_DATA_USERNAME);
                 usernameField.setText(newUserName);
 
-                Toast accCreatedToast = new Toast(getApplicationContext());
-                accCreatedToast.setText("Account created successfully!");
-                accCreatedToast.setDuration(Toast.LENGTH_LONG);
-                accCreatedToast.show();
+                Toast.makeText(getApplicationContext(),"Account created successfully!",Toast.LENGTH_LONG).show();
             }
         }
     }

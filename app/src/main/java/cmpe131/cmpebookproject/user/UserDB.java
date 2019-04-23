@@ -55,6 +55,8 @@ public class UserDB {
 
     public static boolean nameExists(String name) {
         ArrayList<String> userNames = new ArrayList<>();
+        if (readUserList() == null)
+            return false;
         for (User u : readUserList())
             userNames.add(u.getName());
         return (userNames.contains(name));

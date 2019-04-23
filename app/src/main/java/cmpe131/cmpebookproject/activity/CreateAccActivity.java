@@ -105,16 +105,21 @@ public class CreateAccActivity extends AppCompatActivity {
                 String name = usernameField.getText().toString();
                 String pass = passwordField.getText().toString();
                 Gender gender = (Gender) genderSpinner.getSelectedItem();
-                int age = Integer.parseInt(ageField.getText().toString());
+                String ageString = ageField.getText().toString();
+                int age;
+                if (ageString.equals("")) {
+                    Toast.makeText(getApplicationContext(), "No age specified", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else
+                    age = Integer.parseInt(ageString);
+
                 ReadingHabits readingHabits = (ReadingHabits) readingHabitsSpinner.getSelectedItem();
 
                 User newUser = new User (name, pass, gender, age, readingHabits, likedGenres, dislikedGenres, new ArrayList<Book>(), new BookList("Recommended"), new ArrayList<BookList>());
 
                 if (UserDB.nameExists(name)) {
-                    Toast failedAccToast = new Toast(getApplicationContext());
-                    failedAccToast.setText("A user with this name already exists!");
-                    failedAccToast.setDuration(Toast.LENGTH_LONG);
-                    failedAccToast.show();
+                    Toast.makeText(getApplicationContext(),"A user with this name already exists!",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -122,6 +127,8 @@ public class CreateAccActivity extends AppCompatActivity {
                 r.makeRecommendedBookList();
 
                 ArrayList<User> users = UserDB.readUserList();
+                if (users == null)
+                    users = new ArrayList<>();
                 users.add(newUser);
                 UserDB.writeToUserDB(users);
 
