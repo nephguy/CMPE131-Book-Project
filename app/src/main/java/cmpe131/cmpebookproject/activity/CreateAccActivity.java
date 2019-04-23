@@ -22,6 +22,8 @@ import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
+import cmpe131.cmpebookproject.database.DbHelper;
+import cmpe131.cmpebookproject.recommender.Recommender;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
@@ -115,6 +117,9 @@ public class CreateAccActivity extends AppCompatActivity {
                     failedAccToast.show();
                     return;
                 }
+
+                Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
+                r.makeRecommendedBookList();
 
                 ArrayList<User> users = UserDB.readUserList();
                 users.add(newUser);
