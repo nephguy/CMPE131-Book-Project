@@ -74,9 +74,12 @@ public class DbHelper {
             }
         }
 
+        /* FOR DEBUGGING
+
         for (String s : data)
             System.out.print(s + "|");
         System.out.println();
+        */
 
         String[] dataArray = new String[data.size()];
         return data.toArray(data.toArray(dataArray));

@@ -53,9 +53,7 @@ public class ListTabFragment extends Fragment {
             public void onClick(View v) {
                 Recommender r = new Recommender(activeUser, DbHelper.getInstance(getContext()).getAllBooks(),10);
                 r.makeRecommendedBookList();
-                Toast.makeText(getContext(),"Custom Lists are a work in progress", Toast.LENGTH_LONG).show();
-                populateRecommendedList(recommendedBooks);
-
+                Toast.makeText(getContext(),"SIZE OF RECOMMENDED BOOK LIST: " + activeUser.getRecommendedList().size(), Toast.LENGTH_LONG).show();
             }
         });
 
