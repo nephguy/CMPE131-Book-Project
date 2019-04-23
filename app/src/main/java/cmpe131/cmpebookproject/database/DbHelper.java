@@ -4,6 +4,7 @@ import android.content.Context;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.Genre;
@@ -55,9 +56,27 @@ public class DbHelper {
     private String[] parseCsvData (String csvData) {
         ArrayList<String> data = new ArrayList<>();
 
+        // find each value and cut it out
+        // if there are quotes, use them as reference
+        // if not, use the comma as reference
+        while(!csvData.equals("")) {
+            if (csvData.indexOf('"') < 0) {
+                Collections.addAll(data,csvData.split(","));
+                break;
+            }
+            else if (csvData.indexOf('"') < csvData.indexOf(',')) {
+                data.add(csvData.substring(1,csvData.indexOf('"',1)));
+                csvData = csvData.substring(csvData.indexOf('"',1)+2);
+            }
+            else {
+                data.add(csvData.substring(0,csvData.indexOf(',')));
+                csvData = csvData.substring(csvData.indexOf(',')+1);
+            }
+        }
 
-
-
+        for (String s : data)
+            System.out.print(s + "|");
+        System.out.println();
 
         String[] dataArray = new String[data.size()];
         return data.toArray(data.toArray(dataArray));
