@@ -35,6 +35,25 @@ public class User implements Serializable, Parcelable {
         this.customLists = customLists;
     }
 
+    protected User(Parcel in) {
+        name = in.readString();
+        passwordHash = in.readInt();
+        age = in.readInt();
+        ratedBooks = in.createTypedArrayList(Book.CREATOR);
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
     public int getPasswordHash() {return passwordHash;}
@@ -64,6 +83,9 @@ public class User implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(name);
+        dest.writeInt(passwordHash);
+        dest.writeInt(age);
+        dest.writeTypedList(ratedBooks);
     }
 }

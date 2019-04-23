@@ -39,7 +39,7 @@ public class DbHelper {
     private Book parseBook (String bookData) {
 
 
-
+        return null;
     }
 
 
@@ -71,7 +71,7 @@ public class DbHelper {
     public User getUser(String username, int password) {
 
 
-
+        return null;
     }
 
 
