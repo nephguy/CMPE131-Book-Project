@@ -10,6 +10,7 @@ public class UserList {
         userDataBase = new ArrayList<>();
     }
 
+    /*
     public void addUser(User u)
     {
         if(userDataBase.size() < 100)
@@ -33,4 +34,5 @@ public class UserList {
         }
         UserDB.writeToUserDB(userDataBase);//write changed list to UserDB
     }
+    */
 }

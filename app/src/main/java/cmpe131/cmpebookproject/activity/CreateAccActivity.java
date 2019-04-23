@@ -126,11 +126,7 @@ public class CreateAccActivity extends AppCompatActivity {
                 Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
                 r.makeRecommendedBookList();
 
-                ArrayList<User> users = UserDB.readUserList();
-                if (users == null)
-                    users = new ArrayList<>();
-                users.add(newUser);
-                UserDB.writeToUserDB(users);
+                UserDB.writeToUserDB(newUser);
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(INTENT_DATA_USERNAME, name);

@@ -45,10 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User loginUser = UserDB.getUser(usernameField.getText().toString(), passwordField.getText().toString());
                 if (loginUser == null) {
-                    Toast failedLoginToast = new Toast(getApplicationContext());
-                    failedLoginToast.setText("Invalid Login Credentials");
-                    failedLoginToast.setDuration(Toast.LENGTH_LONG);
-                    failedLoginToast.show();
+                    Toast.makeText(getApplicationContext(),"Invalid Login Credentials", Toast.LENGTH_LONG).show();
                 }
                 else {
                     loginIntent.putExtra(INTENT_DATA_USER, (Parcelable) loginUser);

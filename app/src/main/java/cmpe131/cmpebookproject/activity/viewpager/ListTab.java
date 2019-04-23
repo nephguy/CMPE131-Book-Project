@@ -41,10 +41,7 @@ public class ListTab extends TabBaseFragment {
         customListsButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast wip = new Toast(getContext());
-                wip.setText("Custom Lists are a work in progress");
-                wip.setDuration(Toast.LENGTH_LONG);
-                wip.show();
+                Toast.makeText(getContext(),"Custom Lists are a work in progress", Toast.LENGTH_LONG).show();
             }
         });
 
