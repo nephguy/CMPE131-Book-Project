@@ -1,22 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true">
 
-    <!--
-    private String name;
-    private int passwordHash;
-    private Gender gender;
-    private int age;
-    private ReadingHabits readingHabits;
-    private ArrayList<Genre> likedGenres;
-    private ArrayList<Genre> dislikedGenres;
-    private ArrayList<Book> ratedBooks;
-    private BookList recommendedList;
-    private ArrayList<BookList> customLists;
-    -->
-
-
-
-
-</android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/createacc_layout_const"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+        
+        <TextView
+            android:id="@+id/createacc_label_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toTopOf="@id/createacc_layout_const"
+            />
+    
+        <EditText
+            android:id="@+id/createacc_field_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Username..."
+            app:layout_constraintBaseline_toBaselineOf="@id/createacc_label_username"
+            app:layout_constraintLeft_toRightOf="@id/createacc_label_username"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            />
+    
+        <TextView
+            android:id="@+id/createacc_label_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_username"
+            />
+    
+        <EditText
+            android:id="@+id/createacc_field_pass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            android:hint="Password..."
+            app:layout_constraintBaseline_toBaselineOf="@id/createacc_label_pass"
+            app:layout_constraintLeft_toRightOf="@id/createacc_label_pass"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            />
+    
+        <TextView
+            android:id="@+id/createacc_label_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_pass"
+            />
+    
+        <Spinner
+            android:id="@+id/createacc_spinner_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/createacc_label_gender"
+            app:layout_constraintLeft_toRightOf="@id/createacc_label_gender"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            />
+    
+        <TextView
+            android:id="@+id/createacc_label_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_gender"
+            />
+    
+        <EditText
+            android:id="@+id/createacc_field_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBaseline_toBaselineOf="@id/createacc_label_age"
+            app:layout_constraintLeft_toRightOf="@id/createacc_label_age"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            />
+    
+        <TextView
+            android:id="@+id/createacc_label_readinghabits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reading Habits:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_age"
+            />
+    
+        <Spinner
+            android:id="@+id/createacc_spinner_readinghabits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/createacc_label_readinghabits"
+            app:layout_constraintLeft_toRightOf="@id/createacc_label_readinghabits"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            />
+    
+        <TextView
+            android:id="@+id/createacc_label_likedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liked Genres:"
+            android:paddingBottom="8dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_readinghabits"
+            />
+    
+        <include
+            android:id="@+id/createAcc_flexbox_likedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_likedgenres"
+            layout="@layout/view_flexbox"
+            />
+    
+        <TextView
+            android:id="@+id/createacc_label_dislikedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disliked Genres:"
+            android:paddingBottom="8dp"
+            android:paddingTop="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createAcc_flexbox_likedgenres"
+            />
+    
+        <include
+            android:id="@+id/createAcc_flexbox_dislikedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/createacc_label_dislikedgenres"
+            layout="@layout/view_flexbox"
+            />
+        
+        <Button
+            android:id="@+id/createacc_button_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            app:layout_constraintBottom_toBottomOf="@id/createacc_layout_const"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/createAcc_flexbox_dislikedgenres"
+            />
+        
+        
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

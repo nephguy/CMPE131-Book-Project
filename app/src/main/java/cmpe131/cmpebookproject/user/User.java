@@ -35,6 +35,19 @@ public class User implements Serializable, Parcelable {
         this.customLists = customLists;
     }
 
+    public User(String name, String password, Gender gender, int age, ReadingHabits readingHabits, ArrayList<Genre> likedGenres, ArrayList<Genre> dislikedGenres, ArrayList<Book> ratedBooks, BookList recommendedList, ArrayList<BookList> customLists) {
+        this.name = name;
+        this.passwordHash = password.hashCode();
+        this.gender = gender;
+        this.age = age;
+        this.readingHabits = readingHabits;
+        this.likedGenres = likedGenres;
+        this.dislikedGenres = dislikedGenres;
+        this.ratedBooks = ratedBooks;
+        this.recommendedList = recommendedList;
+        this.customLists = customLists;
+    }
+
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
     public int getPasswordHash() {return passwordHash;}

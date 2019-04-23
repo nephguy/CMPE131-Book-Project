@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!--
+    private String title;
+    private String author;
+    private String publisher;
+    private int yearPublished;
+    private int isbn;
+    *private Genre genre;
+    *private int numPages;
+    *private float rating;
+    -->
+
+</android.support.constraint.ConstraintLayout>

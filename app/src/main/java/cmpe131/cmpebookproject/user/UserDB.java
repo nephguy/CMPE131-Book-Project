@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import cmpe131.cmpebookproject.ApplicationContextProvider;
 
@@ -49,5 +51,38 @@ public class UserDB {
             e.printStackTrace();
         }
         return UserList;
+    }
+
+    public static boolean nameExists(String name) {
+        ArrayList<String> userNames = new ArrayList<>();
+        for (User u : readUserList())
+            userNames.add(u.getName());
+        return (userNames.contains(name));
+    }
+
+    /* DEPRECATED
+
+    public static boolean verifyCredentials(String username, String password) {
+        TreeMap<String, Integer> userPassMap = new TreeMap<>();
+        for (User u : readUserList())
+            userPassMap.put(u.getName(), u.getPasswordHash());
+        Integer passHash = userPassMap.get(username);
+        if (passHash == null)
+            return false;
+        else if (passHash == password.hashCode())
+            return true;
+        else
+            return false;
+    }
+    */
+
+    public static User getUser (String username, String password) {
+        for (User u : readUserList()) {
+            boolean userMatch = u.getName().equals(username);
+            boolean passMatch = (u.getPasswordHash() == password.hashCode());
+            if (userMatch && passMatch)
+                return u;
+        }
+        return null;
     }
 }
