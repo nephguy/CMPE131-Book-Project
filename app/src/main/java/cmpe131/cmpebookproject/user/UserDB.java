@@ -18,7 +18,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class UserDB {
 
 
-    public void writeToUserDB(UserList L1)
+    public static void writeToUserDB(ArrayList<User> L1)
     {
         try {
             FileOutputStream fos = ApplicationContextProvider.getContext().openFileOutput("UserDB,", MODE_PRIVATE);
@@ -34,7 +34,7 @@ public class UserDB {
 
     }
 
-    public ArrayList<User> readUserList()
+    public static ArrayList<User> readUserList()
     {
         ArrayList<User> UserList = null;
         try{

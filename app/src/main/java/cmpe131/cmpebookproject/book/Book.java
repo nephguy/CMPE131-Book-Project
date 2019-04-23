@@ -12,12 +12,12 @@ public class Book implements Parcelable {
     private String author;
     private String publisher;
     private int yearPublished;
-    private String isbn;
+    private int isbn;
     private Genre genre;
     private int numPages;
-    private ReadingLevel readingLevel;
+    private float rating;
 
-    public Book(String title, String author, String publisher, int yearPublished, String isbn, Genre genre, int numPages, ReadingLevel readingLevel) {
+    public Book(String title, String author, int isbn, float rating, String publisher,  int numPages, int yearPublished, Genre genre) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
@@ -25,7 +25,7 @@ public class Book implements Parcelable {
         this.isbn = isbn;
         this.genre = genre;
         this.numPages = numPages;
-        this.readingLevel = readingLevel;
+        this.rating = rating;
     }
 
     public String getTitle() {return title;}
@@ -36,15 +36,13 @@ public class Book implements Parcelable {
     public void setPublisher(String publisher) {this.publisher = publisher;}
     public int getYearPublished() {return yearPublished;}
     public void setYearPublished(int yearPublished) {this.yearPublished = yearPublished;}
-    public String getIsbn() {return isbn;}
-    public void setIsbn(String isbn) {this.isbn = isbn;}
+    public int getIsbn() {return isbn;}
+    public void setIsbn(int isbn) {this.isbn = isbn;}
     public Genre getGenre() {return genre;}
     public void setGenre(Genre genre) {this.genre = genre;}
     public int getNumPages() {return numPages;}
     public void setNumPages(int numPages) {this.numPages = numPages;}
-    public ReadingLevel getReadingLevel() {return readingLevel;}
-    public void setReadingLevel(ReadingLevel readingLevel) {this.readingLevel = readingLevel;}
-
+    public float getRating() {return rating;}
 
     @Override
     public int describeContents() {
@@ -57,7 +55,7 @@ public class Book implements Parcelable {
         dest.writeString(author);
         dest.writeString(publisher);
         dest.writeInt(yearPublished);
-        dest.writeString(isbn);
+        dest.writeInt(isbn);
         dest.writeInt(numPages);
     }
 
@@ -67,7 +65,7 @@ public class Book implements Parcelable {
             author = in.readString();
             publisher = in.readString();
             yearPublished = in.readInt();
-            isbn = in.readString();
+            isbn = in.readInt();
             numPages = in.readInt();
         }
 

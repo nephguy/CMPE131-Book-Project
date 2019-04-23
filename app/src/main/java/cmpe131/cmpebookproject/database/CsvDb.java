@@ -12,31 +12,25 @@ class CsvDb {
     private Context context;
     private String csvFileName;
 
-    protected CsvDb(Context context, String csvFileName) {
+    public CsvDb(Context context, String csvFileName) {
         this.context = context;
         this.csvFileName = csvFileName;
     }
 
     /** returns the desired line from the file as a String **/
     String readSpecificLine (int line) throws IOException {
-    // open readers
-        InputStreamReader isr = new InputStreamReader(context.getAssets().open(csvFileName));
-        BufferedReader reader = new BufferedReader(isr);
 
-    // skip to desired line and read it
-        for (int i = 0; i < line; i++) {
-            reader.readLine();
+        ArrayList<String> bookDb = readEntireFile();
+
+        if(line < bookDb.size())
+        {
+            return bookDb.get(line);
         }
-        String data = reader.readLine();
-
-    // throw an exception if trying to read beyond the file
-        if (data == null)
-            throw new IllegalArgumentException("There are less than " + line + " lines in the file!");
-
-    // close readers and return line
-        reader.close();
-        isr.close();
-        return data;
+        else
+        {
+            System.out.print("Line does not exist in DB");
+        }
+        return null;
     }
 
     /** returns an ArrayList of strings, one string per line **/

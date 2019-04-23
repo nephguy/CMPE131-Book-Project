@@ -34,7 +34,6 @@ public class User implements Serializable, Parcelable {
         this.recommendedList = recommendedList;
         this.customLists = customLists;
     }
-
     protected User(Parcel in) {
         name = in.readString();
         passwordHash = in.readInt();

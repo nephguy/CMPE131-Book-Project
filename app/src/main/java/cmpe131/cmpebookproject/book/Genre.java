@@ -1,5 +1,5 @@
 package cmpe131.cmpebookproject.book;
 
 public enum Genre {
-    MYSTERY, FICTION, COMEDY, DRAMA, RELIGIOUS, POETRY, ELEGY, AUTOBIOGRAPHY, BIOGRAPHY, ROMANCE, KIDS, SELF_DEVELOPMENT, MUSIC, COOKING, ACADEMIC, SPORTS, OTHER;
+    Mystery, Fiction, Comedy, Drama, Religious, Poetry, Elegy, Autobiography, Biography, Romance, Kids, Self_development, Music, Cooking, Academic, Sports, Other
 }
