@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.book.Book;
@@ -43,25 +45,39 @@ public class ListTabFragment extends Fragment {
         this.inflater = inflater;
         View view = inflater.inflate(R.layout.activity_main_tab_list, container, false);
 
-        final ScrollView recommendedBooks = view.findViewById(R.id.tab_list_scrollview_recommended);
-        populateRecommendedList(recommendedBooks);
+        final LinearLayout recommendedBooksView = view.findViewById(R.id.tab_list_recommended);
+        populateRecommendedList(recommendedBooksView);
 
 
         Button customListsButton = view.findViewById(R.id.tab_list_button_customlists);
         customListsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(),"Custom Lists are a work in progress", Toast.LENGTH_LONG).show();
+
+                /*
                 Recommender r = new Recommender(activeUser, DbHelper.getInstance(getContext()).getAllBooks(),10);
                 r.makeRecommendedBookList();
-                Toast.makeText(getContext(),"SIZE OF RECOMMENDED BOOK LIST: " + activeUser.getRecommendedList().size(), Toast.LENGTH_LONG).show();
+                System.out.println("SIZE OF RECOMMENDED BOOK LIST: " + activeUser.getRecommendedList().size());
+                populateRecommendedList(recommendedBooksView);
+                */
             }
         });
-
 
         return view;
     }
 
-    private void populateRecommendedList(ScrollView recommendedList) {
+    private void populateRecommendedList(LinearLayout recommendedList) {
+        /*
+        ArrayList<Book> testBooks = new ArrayList<>();
+        ArrayList<Book> allBooks = DbHelper.getInstance(getContext()).getAllBooks();
+        testBooks.add(allBooks.get(0));
+        testBooks.add(allBooks.get(1));
+        testBooks.add(allBooks.get(2));
+        testBooks.add(allBooks.get(3));
+
+        for (Book b : testBooks) {
+        */
         for (Book b : activeUser.getRecommendedList()) {
             View itemView = inflater.inflate(R.layout.view_listitem_book, null);
 
@@ -72,9 +88,9 @@ public class ListTabFragment extends Fragment {
             TextView yearGenre = itemView.findViewById(R.id.listitem_label_yearAndGenre);
             yearGenre.setText(b.getYearPublished() + " - " + b.getGenre().toString());
             TextView pageCount = itemView.findViewById(R.id.listitem_label_pagecount);
-            pageCount.setText(b.getNumPages());
+            pageCount.setText(new Integer(b.getNumPages()).toString() + " pages");
             TextView rating = itemView.findViewById(R.id.listitem_label_rating);
-            rating.setText(Float.toString(b.getRating()) + "/5");
+            rating.setText(b.getRating() + "/5");
 
             recommendedList.addView(itemView);
         }
