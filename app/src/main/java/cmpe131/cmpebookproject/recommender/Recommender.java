@@ -93,7 +93,7 @@ public class Recommender {
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void putRecommendedBooksInRelevantOrder(){
-        PriorityQueue<Book> orderedRecommended = new PriorityQueue<Book>(new Comparator<Book>()
+        PriorityQueue<Book> orderedRecommended = new PriorityQueue<Book>(numberOfBooksRecommended, new Comparator<Book>()
             {
                 @Override
                 public int compare(Book book1, Book book2) {
