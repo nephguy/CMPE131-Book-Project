@@ -56,9 +56,9 @@ public class CreateAccActivity extends AppCompatActivity {
         passwordField = findViewById(R.id.createacc_field_pass);
         ageField = findViewById(R.id.createacc_field_age);
         genderSpinner = findViewById(R.id.createacc_spinner_gender);
-        genderSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,Gender.values()));
+        genderSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
         readingHabitsSpinner = findViewById(R.id.createacc_spinner_readinghabits);
-        readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,ReadingHabits.values()));
+        readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
 
 
         likedGenres = new ArrayList<>();
@@ -67,7 +67,7 @@ public class CreateAccActivity extends AppCompatActivity {
             CheckBox genreButton = new CheckBox(getApplicationContext());
 
             ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32,0,0,16);
+            params.setMargins(32, 0, 0, 16);
             genreButton.setLayoutParams(params);
 
             genreButton.setText(g.toString());
@@ -90,7 +90,7 @@ public class CreateAccActivity extends AppCompatActivity {
             CheckBox genreButton = new CheckBox(getApplicationContext());
 
             ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32,0,0,16);
+            params.setMargins(32, 0, 0, 16);
             genreButton.setLayoutParams(params);
 
             genreButton.setText(g.toString());
@@ -112,27 +112,37 @@ public class CreateAccActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get data
                 String name = usernameField.getText().toString();
                 String pass = passwordField.getText().toString();
                 Gender gender = (Gender) genderSpinner.getSelectedItem();
                 String ageString = ageField.getText().toString();
-                int age;
-                if (ageString.equals("")) {
+                ReadingHabits readingHabits = (ReadingHabits) readingHabitsSpinner.getSelectedItem();
+
+                // final checks
+                if (name.equals("")) {
+                    Toast.makeText(getApplicationContext(), "No username chosen", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (UserDB.nameExists(name)) {
+                    Toast.makeText(getApplicationContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if (pass.equals("")) {
+                    Toast.makeText(getApplicationContext(), "No password chosen", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (ageString.equals("")) {
                     Toast.makeText(getApplicationContext(), "No age specified", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else
-                    age = Integer.parseInt(ageString);
-
-                ReadingHabits readingHabits = (ReadingHabits) readingHabitsSpinner.getSelectedItem();
-
-                User newUser = new User (name, pass, gender, age, readingHabits, likedGenres, dislikedGenres, new ArrayList<Book>(), new BookList("Recommended"), new ArrayList<BookList>());
-
-                if (UserDB.nameExists(name)) {
-                    Toast.makeText(getApplicationContext(),"A user with this name already exists!",Toast.LENGTH_LONG).show();
+                else if (likedGenres.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "You must specify at least one liked genre", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // create user, save, and return
+                User newUser = new User(name, pass, gender, Integer.parseInt(ageString), readingHabits, likedGenres, dislikedGenres, new ArrayList<Book>(), new BookList("Recommended"), new ArrayList<BookList>());
                 Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
                 r.makeRecommendedBookList();
 
@@ -145,4 +155,5 @@ public class CreateAccActivity extends AppCompatActivity {
             }
         });
     }
+
 }

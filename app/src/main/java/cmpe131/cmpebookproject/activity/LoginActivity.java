@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cmpe131.cmpebookproject.R;
@@ -34,6 +36,16 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameField = findViewById(R.id.login_field_username);
         passwordField = findViewById(R.id.login_field_pass);
+        passwordField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER){
+                    loginButton.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         createAccIntent = new Intent(this, CreateAccActivity.class);
         loginIntent = new Intent(this, MainActivity.class);
@@ -75,7 +87,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(getApplicationContext(), "Canceled Account Creation", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Account creation canceled", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        passwordField.setText("");
     }
 }
