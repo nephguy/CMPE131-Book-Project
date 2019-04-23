@@ -160,9 +160,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Account"
-            app:layout_constraintBottom_toBottomOf="@id/createacc_layout_const"
-            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
             app:layout_constraintTop_toBottomOf="@id/createAcc_flexbox_dislikedgenres"
+            app:layout_constraintRight_toRightOf="@id/createacc_layout_const"
+            app:layout_constraintBottom_toBottomOf="@id/createacc_layout_const"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
             />
         
         

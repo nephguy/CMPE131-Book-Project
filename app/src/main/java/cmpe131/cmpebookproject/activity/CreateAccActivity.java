@@ -4,14 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -62,39 +64,47 @@ public class CreateAccActivity extends AppCompatActivity {
         likedGenres = new ArrayList<>();
         likedGenresLayout = findViewById(R.id.createAcc_flexbox_likedgenres);
         for (Genre g : Genre.values()) {
-            final View radiopairView = getLayoutInflater().inflate(R.layout.view_radiopair, likedGenresLayout);
-            final TextView buttonLabel = radiopairView.findViewById(R.id.radiopair_label);
-            buttonLabel.setText(g.toString());
-            final RadioButton radioButton = radiopairView.findViewById(R.id.radiopair_button);
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            CheckBox genreButton = new CheckBox(getApplicationContext());
+
+            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(32,0,0,16);
+            genreButton.setLayoutParams(params);
+
+            genreButton.setText(g.toString());
+            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonLabel.getText().toString());
+                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
                     if (isChecked)
                         likedGenres.add(thisGenre);
                     else
                         likedGenres.remove(thisGenre);
                 }
             });
+            likedGenresLayout.addView(genreButton);
         }
 
         dislikedGenres = new ArrayList<>();
         dislikedGenresLayout = findViewById(R.id.createAcc_flexbox_dislikedgenres);
         for (Genre g : Genre.values()) {
-            final View radiopairView = getLayoutInflater().inflate(R.layout.view_radiopair, dislikedGenresLayout);
-            final TextView buttonLabel = radiopairView.findViewById(R.id.radiopair_label);
-            buttonLabel.setText(g.toString());
-            final RadioButton radioButton = radiopairView.findViewById(R.id.radiopair_button);
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            CheckBox genreButton = new CheckBox(getApplicationContext());
+
+            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(32,0,0,16);
+            genreButton.setLayoutParams(params);
+
+            genreButton.setText(g.toString());
+            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonLabel.getText().toString());
+                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
                     if (isChecked)
                         dislikedGenres.add(thisGenre);
                     else
                         dislikedGenres.remove(thisGenre);
                 }
             });
+            dislikedGenresLayout.addView(genreButton);
         }
 
 

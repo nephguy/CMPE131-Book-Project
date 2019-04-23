@@ -74,5 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Account created successfully!",Toast.LENGTH_LONG).show();
             }
         }
+        if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(getApplicationContext(), "Canceled Account Creation", Toast.LENGTH_SHORT).show();
+        }
     }
 }
