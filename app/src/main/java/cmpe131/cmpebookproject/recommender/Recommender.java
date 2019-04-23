@@ -1,5 +1,8 @@
 package cmpe131.cmpebookproject.recommender;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -35,7 +38,7 @@ public class Recommender {
                                 {
                                 @Override
                                 public int compare(Book book1, Book book2) {
-                                   return book1.getAverageRating() - book2.getAverageRating(); }
+                                   return (int)(book1.getRating() - book2.getRating()); }
                                 });
         this.relevantOrderedBooks = new ArrayList<Book>();
         this.numberOfBooksRecommended = numberOfBooksRecommended;
@@ -88,12 +91,13 @@ public class Recommender {
      * Reorderes the books so that they are ordered from greatest to least rating
      * and stores the elements into ArrayList<Book> relevantOrderedBooks
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void putRecommendedBooksInRelevantOrder(){
         PriorityQueue<Book> orderedRecommended = new PriorityQueue<Book>(new Comparator<Book>()
             {
                 @Override
                 public int compare(Book book1, Book book2) {
-                return book2.getAverageRating() - book1.getAverageRating(); }
+                return (int)(book2.getRating() - book1.getRating()); }
             });
 
         relevantOrderedBooks.addAll(orderedRecommended);
