@@ -3,4 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--
+    private String name;
+    private int passwordHash;
+    private Gender gender;
+    private int age;
+    private ReadingHabits readingHabits;
+    private ArrayList<Genre> likedGenres;
+    private ArrayList<Genre> dislikedGenres;
+    private ArrayList<Book> ratedBooks;
+    private BookList recommendedList;
+    private ArrayList<BookList> customLists;
+    -->
+
+
+
+
 </android.support.constraint.ConstraintLayout>
