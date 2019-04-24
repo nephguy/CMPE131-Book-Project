@@ -91,7 +91,6 @@ public class Recommender {
      * Reorderes the books so that they are ordered from greatest to least rating
      * and stores the elements into ArrayList<Book> relevantOrderedBooks
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void putRecommendedBooksInRelevantOrder(){
         PriorityQueue<Book> orderedRecommended = new PriorityQueue<Book>(numberOfBooksRecommended, new Comparator<Book>()
             {
@@ -99,6 +98,8 @@ public class Recommender {
                 public int compare(Book book1, Book book2) {
                 return (int)(book2.getRating() - book1.getRating()); }
             });
+
+        orderedRecommended.addAll(recommendedBooks);
 
         relevantOrderedBooks.addAll(orderedRecommended);
     }
