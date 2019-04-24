@@ -1,20 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/profile_layout_const"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Work in Progress"
-        android:textSize="36sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        />
+        android:layout_margin="16dp">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/profile_label_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit your account information"
+            android:textSize="24sp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintRight_toRightOf="@id/profile_layout_const"
+            app:layout_constraintTop_toTopOf="@id/profile_layout_const"
+            />
+
+        <TextView
+            android:id="@+id/profile_label_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Username:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_guide"
+            />
+
+        <EditText
+            android:id="@+id/profile_field_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Username..."
+            app:layout_constraintBaseline_toBaselineOf="@id/profile_label_username"
+            app:layout_constraintLeft_toRightOf="@id/profile_label_username"
+            app:layout_constraintRight_toRightOf="@id/profile_layout_const"
+            />
+
+        <TextView
+            android:id="@+id/profile_label_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_username"
+            />
+
+        <Spinner
+            android:id="@+id/profile_spinner_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/profile_label_gender"
+            app:layout_constraintLeft_toRightOf="@id/profile_label_gender"
+            app:layout_constraintRight_toRightOf="@id/profile_layout_const"
+            />
+
+        <TextView
+            android:id="@+id/profile_label_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_gender"
+            />
+
+        <EditText
+            android:id="@+id/profile_field_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBaseline_toBaselineOf="@id/profile_label_age"
+            app:layout_constraintLeft_toRightOf="@id/profile_label_age"
+            app:layout_constraintRight_toRightOf="@id/profile_layout_const"
+            />
+
+        <TextView
+            android:id="@+id/profile_label_readinghabits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reading Habits:"
+            android:paddingRight="8dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_age"
+            />
+
+        <Spinner
+            android:id="@+id/profile_spinner_readinghabits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/profile_label_readinghabits"
+            app:layout_constraintLeft_toRightOf="@id/profile_label_readinghabits"
+            app:layout_constraintRight_toRightOf="@id/profile_layout_const"
+            />
+
+        <TextView
+            android:id="@+id/profile_label_likedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liked Genres:"
+            android:paddingBottom="8dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_readinghabits"
+            />
+
+        <include
+            android:id="@+id/profile_flexbox_likedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_likedgenres"
+            layout="@layout/view_flexbox"
+            />
+
+        <TextView
+            android:id="@+id/profile_label_dislikedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disliked Genres:"
+            android:paddingBottom="8dp"
+            android:paddingTop="24dp"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintTop_toBottomOf="@id/profile_flexbox_likedgenres"
+            />
+
+        <include
+            android:id="@+id/profile_flexbox_dislikedgenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/profile_label_dislikedgenres"
+            layout="@layout/view_flexbox"
+            />
+
+        <Button
+            android:id="@+id/profile_button_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Account"
+            app:layout_constraintTop_toBottomOf="@id/profile_flexbox_dislikedgenres"
+            app:layout_constraintRight_toRightOf="@id/profile_layout_const"
+            app:layout_constraintBottom_toBottomOf="@id/profile_layout_const"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
+            />
+
+        <Button
+            android:id="@+id/profile_button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Account"
+            app:layout_constraintTop_toBottomOf="@id/profile_flexbox_dislikedgenres"
+            app:layout_constraintLeft_toLeftOf="@id/profile_layout_const"
+            app:layout_constraintBottom_toBottomOf="@id/profile_layout_const"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

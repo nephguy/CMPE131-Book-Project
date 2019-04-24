@@ -21,7 +21,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class UserDB {
 
 
-    public static void writeToUserDB(User newUser)
+    public static void addUser(User newUser)
     {
         File userDb = new File(ApplicationContextProvider.getContext().getFilesDir(), "UserDB.ser");
         ArrayList<User> users;
@@ -33,9 +33,21 @@ public class UserDB {
                 users = readUserList();
             users.add(newUser);
 
+            writeUserDb(users);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeUserDb(ArrayList<User> userList) {
+        File userDb = new File(ApplicationContextProvider.getContext().getFilesDir(), "UserDB.ser");
+
+        try {
             FileOutputStream fos = ApplicationContextProvider.getContext().openFileOutput(userDb.getName(), MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(users);
+            os.writeObject(userList);
             os.close();
             fos.close();
         }
@@ -43,7 +55,19 @@ public class UserDB {
         {
             e.printStackTrace();
         }
+    }
 
+    public static void deleteUser(User oldUser) { // TODO - MAKE THIS ACTUALLY DELETE THE USER
+        ArrayList<User> users = readUserList();
+        if (users == null)
+            return;
+        for (User u : users) {
+            if (u.getName().equals(oldUser.getName())) {
+                System.out.println(users.remove(oldUser));
+                writeUserDb(users);
+                return;
+            }
+        }
     }
 
     public static ArrayList<User> readUserList()

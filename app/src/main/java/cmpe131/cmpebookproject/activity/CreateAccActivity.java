@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -146,7 +144,7 @@ public class CreateAccActivity extends AppCompatActivity {
                 Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
                 r.makeRecommendedBookList();
 
-                UserDB.writeToUserDB(newUser);
+                UserDB.addUser(newUser);
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(INTENT_DATA_USERNAME, name);
