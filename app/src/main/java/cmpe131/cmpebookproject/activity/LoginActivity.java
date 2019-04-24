@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cmpe131.cmpebookproject.R;
@@ -33,7 +35,27 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         usernameField = findViewById(R.id.login_field_username);
+        usernameField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER){
+                    loginButton.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         passwordField = findViewById(R.id.login_field_pass);
+        passwordField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER){
+                    loginButton.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         createAccIntent = new Intent(this, CreateAccActivity.class);
         loginIntent = new Intent(this, MainActivity.class);
@@ -45,10 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User loginUser = UserDB.getUser(usernameField.getText().toString(), passwordField.getText().toString());
                 if (loginUser == null) {
-                    Toast failedLoginToast = new Toast(getApplicationContext());
-                    failedLoginToast.setText("Invalid Login Credentials");
-                    failedLoginToast.setDuration(Toast.LENGTH_LONG);
-                    failedLoginToast.show();
+                    Toast.makeText(getApplicationContext(),"Invalid Login Credentials", Toast.LENGTH_LONG).show();
                 }
                 else {
                     loginIntent.putExtra(INTENT_DATA_USER, (Parcelable) loginUser);
@@ -77,5 +96,15 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Account created successfully!",Toast.LENGTH_LONG).show();
             }
         }
+        if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(getApplicationContext(), "Account creation canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        usernameField.setText("");
+        passwordField.setText("");
     }
 }

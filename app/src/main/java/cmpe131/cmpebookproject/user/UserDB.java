@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,12 +21,33 @@ import static android.content.Context.MODE_PRIVATE;
 public class UserDB {
 
 
-    public static void writeToUserDB(ArrayList<User> L1)
+    public static void addUser(User newUser)
     {
+        File userDb = new File(ApplicationContextProvider.getContext().getFilesDir(), "UserDB.ser");
+        ArrayList<User> users;
+
         try {
-            FileOutputStream fos = ApplicationContextProvider.getContext().openFileOutput("UserDB,", MODE_PRIVATE);
+            if (userDb.createNewFile())
+                users = new ArrayList<>();
+            else
+                users = readUserList();
+            users.add(newUser);
+
+            writeUserDb(users);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeUserDb(ArrayList<User> userList) {
+        File userDb = new File(ApplicationContextProvider.getContext().getFilesDir(), "UserDB.ser");
+
+        try {
+            FileOutputStream fos = ApplicationContextProvider.getContext().openFileOutput(userDb.getName(), MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(L1);
+            os.writeObject(userList);
             os.close();
             fos.close();
         }
@@ -33,21 +55,39 @@ public class UserDB {
         {
             e.printStackTrace();
         }
+    }
 
+    public static void deleteUser(User oldUser) { // TODO - MAKE THIS ACTUALLY DELETE THE USER
+        ArrayList<User> users = readUserList();
+        if (users == null)
+            return;
+        for (User u : users) {
+            if (u.getName().equals(oldUser.getName())) {
+                System.out.println(users.remove(oldUser));
+                writeUserDb(users);
+                return;
+            }
+        }
     }
 
     public static ArrayList<User> readUserList()
     {
-        ArrayList<User> UserList = null;
+        File userDb = new File(ApplicationContextProvider.getContext().getFilesDir(), "UserDB.ser");
+        ArrayList<User> UserList = new ArrayList<>();
         try{
-            FileInputStream fis =  ApplicationContextProvider.getContext().openFileInput("UserDB");
+            FileInputStream fis =  ApplicationContextProvider.getContext().openFileInput(userDb.getName());
             ObjectInputStream is = new ObjectInputStream(fis);
             UserList = (ArrayList<User>)is.readObject();
             is.close();
             fis.close();
         }
-        catch (Exception e)
-        {
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return UserList;

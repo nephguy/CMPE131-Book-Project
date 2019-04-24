@@ -10,6 +10,7 @@ public class UserList {
         userDataBase = new ArrayList<>();
     }
 
+    /*
     public void addUser(User u)
     {
         if(userDataBase.size() < 100)
@@ -17,7 +18,7 @@ public class UserList {
         else
             System.out.print("DataBase Full");
 
-         UserDB.writeToUserDB(userDataBase);//write changed list to UserDB
+         UserDB.addUser(userDataBase);//write changed list to UserDB
 
     }
 
@@ -31,6 +32,7 @@ public class UserList {
         {
             System.out.print("User cannot be deleted");
         }
-        UserDB.writeToUserDB(userDataBase);//write changed list to UserDB
+        UserDB.addUser(userDataBase);//write changed list to UserDB
     }
+    */
 }

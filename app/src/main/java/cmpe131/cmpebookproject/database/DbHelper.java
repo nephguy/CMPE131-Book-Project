@@ -2,11 +2,10 @@ package cmpe131.cmpebookproject.database;
 
 import android.content.Context;
 
-import java.io.IOException;
-import java.util.ArrayList;
 
-import cmpe131.cmpebookproject.ApplicationContextProvider;
-import cmpe131.cmpebookproject.R;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.user.User;
@@ -29,7 +28,7 @@ public class DbHelper {
     private DbHelper(Context context) {
         this.context = context;
         //userDb = new SerializableDb<>(context, context.getString(R.string.database_user_foldername), ".usr");
-        bookDb = new CsvDb(context, "bookList copy.csv");
+        bookDb = new CsvDb(context, "bookDB.csv");
     }
 
 
@@ -41,9 +40,49 @@ public class DbHelper {
      *
      * parses a String of book data and turns it into a Book object **/
     private Book parseBook (String bookData) {
+        String[] bookparam = parseCsvData(bookData);
+        return new Book(bookparam[0],
+                bookparam[1],
+                bookparam[2],
+                Float.parseFloat(bookparam[3]),
+                bookparam[4],
+                Integer.parseInt(bookparam[5]),
+                Integer.parseInt(bookparam[6]),
+                Genre.getEnum(bookparam[7]));
+    }
 
-        String[] bookparam = bookData.split(",");
-        return new Book(bookparam[0],bookparam[1],Integer.parseInt(bookparam[2]),Float.parseFloat(bookparam[3]),bookparam[4], Integer.parseInt(bookparam[5]), Integer.parseInt(bookparam[6]), Genre.valueOf(bookparam[7]));
+    // because some data values have commas in them, so they can't easily be retrieved.
+    // those that do are surrounded by quotes
+    private String[] parseCsvData (String csvData) {
+        ArrayList<String> data = new ArrayList<>();
+
+        // find each value and cut it out
+        // if there are quotes, use them as reference
+        // if not, use the comma as reference
+        while(!csvData.equals("")) {
+            if (csvData.indexOf('"') < 0) {
+                Collections.addAll(data,csvData.split(","));
+                break;
+            }
+            else if (csvData.indexOf('"') < csvData.indexOf(',')) {
+                data.add(csvData.substring(1,csvData.indexOf('"',1)));
+                csvData = csvData.substring(csvData.indexOf('"',1)+2);
+            }
+            else {
+                data.add(csvData.substring(0,csvData.indexOf(',')));
+                csvData = csvData.substring(csvData.indexOf(',')+1);
+            }
+        }
+
+        /* FOR DEBUGGING
+
+        for (String s : data)
+            System.out.print(s + "|");
+        System.out.println();
+        */
+
+        String[] dataArray = new String[data.size()];
+        return data.toArray(data.toArray(dataArray));
     }
 
 
@@ -57,18 +96,14 @@ public class DbHelper {
     public ArrayList<Book> getAllBooks() {
         if (allBooks != null)
             return allBooks;
-        else {
-            CsvDb d1 = new CsvDb(ApplicationContextProvider.getContext(), "bookDB.csv");
-            try {
-                ArrayList<String>bookListString  = d1.readEntireFile();
-                for(String s : bookListString)
-                {
-                    allBooks.add(parseBook(s));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        else
+            allBooks = new ArrayList<>();
+
+        ArrayList<String> bookData = bookDb.readEntireFile();
+        for (int i = 1; i < bookData.size(); i++) {
+            allBooks.add(parseBook(bookData.get(i)));
         }
+
         return allBooks;
     }
 

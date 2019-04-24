@@ -20,11 +20,25 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ListTab.newInstance(activeUser);
+                return ListTabFragment.newInstance(activeUser);
             case 1:
-                return SearchTab.newInstance(activeUser);
+                return SearchTabFragment.newInstance(activeUser);
             case 2:
-                return ProfileTab.newInstance(activeUser);
+                return ProfileTabFragment.newInstance(activeUser);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public String getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "Lists";
+            case 1:
+                return "Search";
+            case 2:
+                return "Profile";
             default:
                 return null;
         }

@@ -10,22 +10,22 @@ public class Book implements Parcelable {
 
     private String title;
     private String author;
-    private String publisher;
-    private int yearPublished;
-    private int isbn;
-    private Genre genre;
-    private int numPages;
+    private String isbn;
     private float rating;
+    private String publisher;
+    private int numPages;
+    private int yearPublished;
+    private Genre genre;
 
-    public Book(String title, String author, int isbn, float rating, String publisher,  int numPages, int yearPublished, Genre genre) {
+    public Book(String title, String author, String isbn, float rating, String publisher,  int numPages, int yearPublished, Genre genre) {
         this.title = title;
         this.author = author;
-        this.publisher = publisher;
-        this.yearPublished = yearPublished;
         this.isbn = isbn;
-        this.genre = genre;
-        this.numPages = numPages;
         this.rating = rating;
+        this.publisher = publisher;
+        this.numPages = numPages;
+        this.yearPublished = yearPublished;
+        this.genre = genre;
     }
 
     public String getTitle() {return title;}
@@ -36,8 +36,8 @@ public class Book implements Parcelable {
     public void setPublisher(String publisher) {this.publisher = publisher;}
     public int getYearPublished() {return yearPublished;}
     public void setYearPublished(int yearPublished) {this.yearPublished = yearPublished;}
-    public int getIsbn() {return isbn;}
-    public void setIsbn(int isbn) {this.isbn = isbn;}
+    public String getIsbn() {return isbn;}
+    public void setIsbn(String isbn) {this.isbn = isbn;}
     public Genre getGenre() {return genre;}
     public void setGenre(Genre genre) {this.genre = genre;}
     public int getNumPages() {return numPages;}
@@ -53,20 +53,24 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(author);
+        dest.writeString(isbn);
+        dest.writeFloat(rating);
         dest.writeString(publisher);
-        dest.writeInt(yearPublished);
-        dest.writeInt(isbn);
         dest.writeInt(numPages);
+        dest.writeInt(yearPublished);
+        dest.writeString(isbn);
     }
 
     public Book(Parcel in)
         {
             title = in.readString();
             author = in.readString();
+            isbn = in.readString();
+            rating = in.readFloat();
             publisher = in.readString();
-            yearPublished = in.readInt();
-            isbn = in.readInt();
             numPages = in.readInt();
+            yearPublished = in.readInt();
+            isbn = in.readString();
         }
 
     public static final Parcelable.Creator<Book> CREATOR
