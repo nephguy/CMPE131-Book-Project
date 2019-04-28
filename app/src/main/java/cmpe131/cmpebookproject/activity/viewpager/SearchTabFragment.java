@@ -49,7 +49,7 @@ public class SearchTabFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_search, container, false);
-        FocusFixer.setOnKeyListener_passFocusOnFinish(view.findViewById(R.id.search_layout_const));
+        FocusFixer.setAllFieldsPassFocusOnFinish((ViewGroup)view.findViewById(R.id.search_layout_const));
 
         includedGenres = new ArrayList<>();
         includedGenresLayout = view.findViewById(R.id.search_flexbox_includedgenres);

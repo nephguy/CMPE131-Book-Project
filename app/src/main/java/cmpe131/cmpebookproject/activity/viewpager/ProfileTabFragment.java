@@ -67,7 +67,7 @@ public class ProfileTabFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_profile, container, false);
-        FocusFixer.setOnKeyListener_clearFocusOnFinish(view.findViewById(R.id.profile_layout_const));
+        FocusFixer.setAllFieldsClearFocusOnFinish((ViewGroup)view.findViewById(R.id.profile_layout_const));
 
 
         usernameField = view.findViewById(R.id.profile_field_username);
