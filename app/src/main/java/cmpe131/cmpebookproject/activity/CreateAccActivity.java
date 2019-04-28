@@ -28,7 +28,7 @@ import cmpe131.cmpebookproject.recommender.Recommender;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.user.UserDB;
+import cmpe131.cmpebookproject.database.UserDB;
 
 import static cmpe131.cmpebookproject.activity.LoginActivity.INTENT_DATA_USERNAME;
 
@@ -123,7 +123,7 @@ public class CreateAccActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "No username chosen", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (UserDB.nameExists(name)) {
+                else if (DbHelper.getInstance(getApplicationContext()).usernameTaken(name)) {
                     Toast.makeText(getApplicationContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -145,7 +145,7 @@ public class CreateAccActivity extends AppCompatActivity {
                 Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
                 r.makeRecommendedBookList();
 
-                UserDB.addUser(newUser);
+                DbHelper.getInstance(getApplicationContext()).addUser(newUser);
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(INTENT_DATA_USERNAME, name);

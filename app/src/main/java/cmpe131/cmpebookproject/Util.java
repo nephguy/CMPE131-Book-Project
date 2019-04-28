@@ -38,4 +38,17 @@ public class Util {
         return v.getContext().getResources().getResourceEntryName(v.getId());
     }
 
+    public static long generateSerialUID (String s) {
+        String serialUID = "";
+        StringBuilder sb = new StringBuilder(serialUID);
+        for (int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if (Character.isAlphabetic(c))
+                sb.append(Character.getNumericValue(c));
+            if (Character.isDigit(c))
+                sb.append(c);
+        }
+        return Long.parseLong(sb.toString());
+    }
+
 }

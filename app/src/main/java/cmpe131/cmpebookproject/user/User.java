@@ -6,12 +6,13 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
 
 public class User implements Serializable, Parcelable {
-    private static final long serialVersionUID = 21190518L;
+    private static final long serialVersionUID = Util.generateSerialUID("user_v1");
     private String name;
     private int passwordHash;
     private Gender gender;
@@ -83,8 +84,29 @@ public class User implements Serializable, Parcelable {
     public ArrayList<BookList> getCustomLists() {return customLists;}
     public void setCustomLists(ArrayList<BookList> customLists) {this.customLists = customLists;}
 
+    @Override
     public String toString() {
         return name + ": " + age + " " + gender.toString();
+    }
+
+    @Override
+    public boolean equals (Object obj) {
+        if (!(obj instanceof User))
+            return false;
+        User u = (User)obj;
+
+        boolean sameName = this.name.equals(u.name);
+        boolean samePass = this.passwordHash == u.passwordHash;
+        boolean sameGender = this.gender.equals(u.gender);
+        boolean sameAge = this.age == u.age;
+        boolean sameReadingHabits = this.readingHabits.equals(u.readingHabits);
+        boolean sameLikedGenres = this.likedGenres.equals(u.likedGenres);
+        boolean sameDislikedGenres = this.dislikedGenres.equals(u.dislikedGenres);
+        boolean sameRatedBooks = this.ratedBooks.equals(u.ratedBooks);
+        boolean sameRecommendedList = this.recommendedList.equals(u.recommendedList);
+        boolean sameCustomLists = this.customLists.equals(u.customLists);
+
+        return (sameName && samePass && sameGender && sameAge && sameReadingHabits && sameLikedGenres && sameDislikedGenres && sameRatedBooks && sameRecommendedList && sameCustomLists);
     }
 
 

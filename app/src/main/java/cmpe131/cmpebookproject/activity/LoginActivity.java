@@ -12,8 +12,9 @@ import android.widget.Toast;
 import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
+import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.user.UserDB;
+import cmpe131.cmpebookproject.database.UserDB;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,7 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User loginUser = UserDB.getUser(usernameField.getText().toString(), passwordField.getText().toString());
+                User loginUser = DbHelper.getInstance(getApplicationContext())
+                        .getUser(usernameField.getText().toString(), passwordField.getText().toString());
                 if (loginUser == null) {
                     Toast.makeText(getApplicationContext(),"Invalid Login Credentials", Toast.LENGTH_LONG).show();
                 }
@@ -85,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        usernameField.setText("");
         passwordField.setText("");
     }
 }

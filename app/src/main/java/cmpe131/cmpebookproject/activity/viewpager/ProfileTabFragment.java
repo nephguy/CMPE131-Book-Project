@@ -21,10 +21,11 @@ import java.util.ArrayList;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Genre;
+import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.user.UserDB;
+import cmpe131.cmpebookproject.database.UserDB;
 
 public class ProfileTabFragment extends Fragment {
 
@@ -44,6 +45,8 @@ public class ProfileTabFragment extends Fragment {
     ArrayList<Genre> likedGenres;
     ArrayList<Genre> dislikedGenres;
 
+    DbHelper dbHelper;
+
     // newInstance constructor for creating fragment with arguments
     public static ProfileTabFragment newInstance(User user) {
         ProfileTabFragment tabBaseFragment = new ProfileTabFragment();
@@ -57,6 +60,7 @@ public class ProfileTabFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activeUser = getArguments().getParcelable(KEY_DATA_ACTIVEUSER);
+        dbHelper = DbHelper.getInstance(getContext());
     }
 
     @Override
@@ -140,7 +144,7 @@ public class ProfileTabFragment extends Fragment {
                 String ageString = ageField.getText().toString();
                 ReadingHabits readingHabits = (ReadingHabits) readingHabitsSpinner.getSelectedItem();
 
-                if (UserDB.nameExists(name)) {
+                if (dbHelper.usernameTaken(name)) {
                     Toast.makeText(getContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -155,8 +159,12 @@ public class ProfileTabFragment extends Fragment {
                 editedUser.setLikedGenres(likedGenres);
                 editedUser.setDislikedGenres(dislikedGenres);
 
-                UserDB.deleteUser(activeUser);
-                UserDB.addUser(editedUser);
+                if (editedUser.equals(activeUser)) {
+                    Toast.makeText(getContext(), "No changes made - did not update user", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dbHelper.appendUser(activeUser, editedUser);
 
                 Toast.makeText(getContext(), "User information updated. Please login again", Toast.LENGTH_LONG).show();
                 logout();
@@ -168,7 +176,7 @@ public class ProfileTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (delete) {
-                    UserDB.deleteUser(activeUser);
+                    dbHelper.deleteUser(activeUser);
                     Toast.makeText(getContext(),"Account deleted",Toast.LENGTH_LONG).show();
                     logout();
                 }
