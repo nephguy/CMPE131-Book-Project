@@ -18,6 +18,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 
+import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Genre;
@@ -66,6 +67,7 @@ public class ProfileTabFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_profile, container, false);
+        FocusFixer.setOnKeyListener_clearFocusOnFinish(view.findViewById(R.id.profile_layout_const));
 
 
         usernameField = view.findViewById(R.id.profile_field_username);
