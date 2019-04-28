@@ -93,6 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:hint="years"
             app:layout_constraintBaseline_toBaselineOf="@id/createacc_label_age"
             app:layout_constraintLeft_toRightOf="@id/createacc_label_age"
             app:layout_constraintRight_toRightOf="@id/createacc_layout_const"

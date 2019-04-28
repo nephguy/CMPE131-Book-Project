@@ -19,6 +19,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
+import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
@@ -71,11 +72,11 @@ public class ProfileTabFragment extends Fragment {
 
         genderSpinner = view.findViewById(R.id.profile_spinner_gender);
         genderSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
-        setSpinnerSelection(genderSpinner,activeUser.getGender());
+        Util.setSpinnerSelection(genderSpinner,activeUser.getGender());
 
         readingHabitsSpinner = view.findViewById(R.id.profile_spinner_readinghabits);
         readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
-        setSpinnerSelection(readingHabitsSpinner,activeUser.getReadingHabits());
+        Util.setSpinnerSelection(readingHabitsSpinner,activeUser.getReadingHabits());
 
         likedGenres = activeUser.getLikedGenres();
         likedGenresLayout = view.findViewById(R.id.profile_flexbox_likedgenres);
@@ -179,12 +180,6 @@ public class ProfileTabFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private static <T extends Enum> void setSpinnerSelection (Spinner spinner, Enum o) {
-        int itemPos = ((ArrayAdapter<T>)spinner.getAdapter()).getPosition((T)o);
-        //System.out.println("INDEX OF " + o + " IN SPINNER: " + itemPos);
-        spinner.setSelection(itemPos);
     }
 
     private void logout() {

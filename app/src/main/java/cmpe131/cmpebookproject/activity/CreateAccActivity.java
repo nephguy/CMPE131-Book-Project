@@ -19,6 +19,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
+import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
@@ -49,6 +50,7 @@ public class CreateAccActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createacc);
+        FocusFixer.setAllFieldsPassFocusOnFinish((ViewGroup)findViewById(R.id.createacc_layout_const));
 
         usernameField = findViewById(R.id.createacc_field_username);
         passwordField = findViewById(R.id.createacc_field_pass);
@@ -57,7 +59,6 @@ public class CreateAccActivity extends AppCompatActivity {
         genderSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
         readingHabitsSpinner = findViewById(R.id.createacc_spinner_readinghabits);
         readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
-
 
         likedGenres = new ArrayList<>();
         likedGenresLayout = findViewById(R.id.createAcc_flexbox_likedgenres);

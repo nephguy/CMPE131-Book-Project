@@ -11,6 +11,7 @@ import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
 
 public class User implements Serializable, Parcelable {
+    private static final long serialVersionUID = 21190518L;
     private String name;
     private int passwordHash;
     private Gender gender;
@@ -81,6 +82,10 @@ public class User implements Serializable, Parcelable {
     public void setRecommendedList(BookList recommendedList) {this.recommendedList = recommendedList;}
     public ArrayList<BookList> getCustomLists() {return customLists;}
     public void setCustomLists(ArrayList<BookList> customLists) {this.customLists = customLists;}
+
+    public String toString() {
+        return name + ": " + age + " " + gender.toString();
+    }
 
 
     @Override

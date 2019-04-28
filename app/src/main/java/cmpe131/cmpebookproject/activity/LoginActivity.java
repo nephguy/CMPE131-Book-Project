@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.R;
+import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.user.User;
 import cmpe131.cmpebookproject.user.UserDB;
 
@@ -34,22 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameField = findViewById(R.id.login_field_username);
-        passwordField = findViewById(R.id.login_field_pass);
-        passwordField.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER){
-                    loginButton.callOnClick();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         createAccIntent = new Intent(this, CreateAccActivity.class);
         loginIntent = new Intent(this, MainActivity.class);
-
 
         loginButton = findViewById(R.id.login_button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         createaccButton = findViewById(R.id.login_button_createacc);
         createaccButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(createAccIntent, REQUEST_CREATE_ACCOUNT);
             }
         });
+
+        usernameField = findViewById(R.id.login_field_username);
+        FocusFixer.setOnKeyListener_passFocusOnFinish(usernameField);
+        passwordField = findViewById(R.id.login_field_pass);
+        Util.setOnKeyListener_fieldPressButtonOnFinish(passwordField,loginButton);
+
     }
 
     @Override
