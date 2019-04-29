@@ -14,7 +14,6 @@ import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.database.UserDB;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,10 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
     Intent createAccIntent;
     Intent loginIntent;
-
-    public static final int REQUEST_CREATE_ACCOUNT = 10101;
-    public static final String INTENT_DATA_USER = "INTENT_DATA_USER";
-    public static final String INTENT_DATA_USERNAME = "INTENT_DATA_USERNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +40,10 @@ public class LoginActivity extends AppCompatActivity {
                 User loginUser = DbHelper.getInstance(getApplicationContext())
                         .getUser(usernameField.getText().toString(), passwordField.getText().toString());
                 if (loginUser == null) {
-                    Toast.makeText(getApplicationContext(),"Invalid Login Credentials", Toast.LENGTH_LONG).show();
+                    Util.shortToast(getApplicationContext(),"Invalid Login Credentials");
                 }
                 else {
-                    loginIntent.putExtra(INTENT_DATA_USER, (Parcelable) loginUser);
+                    loginIntent.putExtra(Util.INTENT_DATA_USER, (Parcelable) loginUser);
                     startActivity(loginIntent);
                 }
             }
@@ -58,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         createaccButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(createAccIntent, REQUEST_CREATE_ACCOUNT);
+                startActivityForResult(createAccIntent, Util.REQUEST_CREATE_ACCOUNT);
             }
         });
 
@@ -71,16 +66,16 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CREATE_ACCOUNT) {
+        if (requestCode == Util.REQUEST_CREATE_ACCOUNT) {
             if (resultCode == RESULT_OK) {
-                String newUserName = data.getStringExtra(INTENT_DATA_USERNAME);
+                String newUserName = data.getStringExtra(Util.INTENT_DATA_USERNAME);
                 usernameField.setText(newUserName);
 
-                Toast.makeText(getApplicationContext(),"Account created successfully!",Toast.LENGTH_LONG).show();
+                Util.shortToast(getApplicationContext(),"Account created successfully!");
             }
         }
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(getApplicationContext(), "Account creation canceled", Toast.LENGTH_SHORT).show();
+            Util.shortToast(getApplicationContext(), "Account creation canceled");
         }
     }
 

@@ -1,12 +1,18 @@
 package cmpe131.cmpebookproject.book;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
-import cmpe131.cmpebookproject.user.ReadingLevel;
+import cmpe131.cmpebookproject.R;
+import cmpe131.cmpebookproject.Util;
+import cmpe131.cmpebookproject.activity.BookInfoActivity;
+import cmpe131.cmpebookproject.Listable;
 
-public class Book implements Parcelable {
-
+public class Book implements Parcelable, Listable {
 
     private String title;
     private String author;
@@ -58,7 +64,7 @@ public class Book implements Parcelable {
         dest.writeString(publisher);
         dest.writeInt(numPages);
         dest.writeInt(yearPublished);
-        dest.writeString(isbn);
+        dest.writeString(genre.toString());
     }
 
     public Book(Parcel in)
@@ -70,7 +76,7 @@ public class Book implements Parcelable {
             publisher = in.readString();
             numPages = in.readInt();
             yearPublished = in.readInt();
-            isbn = in.readString();
+            genre = Genre.getEnum(in.readString());
         }
 
     public static final Parcelable.Creator<Book> CREATOR
@@ -84,6 +90,34 @@ public class Book implements Parcelable {
             }
         };
 
+
+
+    @Override
+    public View getListView(LayoutInflater inflater) {
+        final View bookView = inflater.inflate(R.layout.view_listitem_book, null);
+
+        TextView title = bookView.findViewById(R.id.listitem_book_label_title);
+        title.setText(this.title);
+        TextView author = bookView.findViewById(R.id.listitem_book_label_author);
+        author.setText(this.author);
+        TextView yearGenre = bookView.findViewById(R.id.listitem_book_label_yearANDgenre);
+        yearGenre.setText(this.yearPublished + " - " + this.genre);
+        TextView pageCount = bookView.findViewById(R.id.listitem_book_label_pcount);
+        pageCount.setText(this.numPages + " pages");
+        TextView rating = bookView.findViewById(R.id.listitem_book_label_rating);
+        rating.setText(this.rating + "/5");
+
+        final Intent bookInfoIntent = new Intent(bookView.getContext(), BookInfoActivity.class);
+        bookInfoIntent.putExtra(Util.INTENT_DATA_BOOK,this);
+        bookView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookView.getContext().startActivity(bookInfoIntent);
+            }
+        });
+
+        return bookView;
+    }
 }
 
 

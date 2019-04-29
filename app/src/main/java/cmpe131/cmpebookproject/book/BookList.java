@@ -2,13 +2,17 @@ package cmpe131.cmpebookproject.book;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import java.util.ArrayList;
 
-public class BookList extends ArrayList<Book> implements Parcelable {
+import cmpe131.cmpebookproject.AdapterSelectable;
+import cmpe131.cmpebookproject.Listable;
+
+public class BookList extends ArrayList<Book> implements Parcelable, Listable, AdapterSelectable {
 
     private String listName;
-
 
     public BookList(String listName) {
         super();
@@ -51,4 +55,10 @@ public class BookList extends ArrayList<Book> implements Parcelable {
             return new BookList[size];
         }
     };
+
+
+    @Override
+    public View getListView(LayoutInflater inflater) {
+        return null;
+    }
 }

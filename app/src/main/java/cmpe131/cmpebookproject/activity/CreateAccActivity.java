@@ -28,9 +28,8 @@ import cmpe131.cmpebookproject.recommender.Recommender;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.database.UserDB;
 
-import static cmpe131.cmpebookproject.activity.LoginActivity.INTENT_DATA_USERNAME;
+import static cmpe131.cmpebookproject.Util.INTENT_DATA_USERNAME;
 
 public class CreateAccActivity extends AppCompatActivity {
 

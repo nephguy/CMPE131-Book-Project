@@ -29,7 +29,7 @@
         />
 
     <ScrollView
-        android:id="@+id/tab_list_scrollview"
+        android:id="@+id/tab_list_layout_scrollview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"

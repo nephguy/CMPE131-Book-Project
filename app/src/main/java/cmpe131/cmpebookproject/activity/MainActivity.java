@@ -9,7 +9,7 @@ import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.activity.viewpager.TabFragmentPagerAdapter;
 import cmpe131.cmpebookproject.user.User;
 
-import static cmpe131.cmpebookproject.activity.LoginActivity.INTENT_DATA_USER;
+import static cmpe131.cmpebookproject.Util.INTENT_DATA_USER;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         activeUser = getIntent().getParcelableExtra(INTENT_DATA_USER);
 
