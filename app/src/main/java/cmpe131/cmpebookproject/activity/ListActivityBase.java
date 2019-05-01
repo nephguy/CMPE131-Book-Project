@@ -53,6 +53,8 @@ public abstract class ListActivityBase extends UserActivityBase {
 
     private void checkListEmpty() {
         emptyLabel.setText(textIfEmpty);
+//        if (dataset == null)
+//            emptyLabel.setVisibility(View.VISIBLE);
         if (dataset.size() == 0)
             emptyLabel.setVisibility(View.VISIBLE);
         else

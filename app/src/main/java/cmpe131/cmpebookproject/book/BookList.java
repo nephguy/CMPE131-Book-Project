@@ -10,15 +10,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cmpe131.cmpebookproject.AdapterSelectable;
 import cmpe131.cmpebookproject.Listable;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.activity.ListActivityBookList;
 
-public class BookList extends ArrayList<Book> implements Parcelable, Listable, AdapterSelectable {
+public class BookList extends ArrayList<Book> implements Parcelable, Listable {
 
     private String listName;
+    private static final long serialVersionUID = Util.generateSerialUID("blist_v1");
 
     public BookList(String listName) {
         super();
@@ -101,7 +101,7 @@ public class BookList extends ArrayList<Book> implements Parcelable, Listable, A
         Intent displayIntent = new Intent(context, ListActivityBookList.class);
         displayIntent.putExtra(Util.INTENT_DATA_LIST_DATASET, (Parcelable)this);
         displayIntent.putExtra(Util.INTENT_DATA_LIST_LISTTITLE, this.listName);
-        displayIntent.putExtra(Util.INTENT_DATA_LIST_LAYOUTRES, getListViewLayoutRes());
+        displayIntent.putExtra(Util.INTENT_DATA_LIST_LAYOUTRES, R.layout.listitem_book);
         return displayIntent;
     }
 

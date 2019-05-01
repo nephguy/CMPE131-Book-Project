@@ -6,15 +6,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.io.Serializable;
 
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.activity.BookInfoActivity;
 import cmpe131.cmpebookproject.Listable;
 
-public class Book implements Parcelable, Listable {
+public class Book implements Parcelable, Listable, Serializable {
 
+    private static final long serialVersionUID = Util.generateSerialUID("book_v1");
     private String title;
     private String author;
     private String isbn;
@@ -50,6 +54,28 @@ public class Book implements Parcelable, Listable {
     public int getNumPages() {return numPages;}
     public void setNumPages(int numPages) {this.numPages = numPages;}
     public float getRating() {return rating;}
+
+    @Override
+    public String toString() {
+        return title;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Book))
+            return false;
+        Book other = (Book)obj;
+
+        boolean sameTitle = this.title.equals(other.title);
+        boolean sameAuthor = this.author.equals(other.author);
+        boolean samePublisher = this.publisher.equals(other.publisher);
+        boolean sameYearPublished = this.yearPublished == other.yearPublished;
+        boolean sameIsbn = this.isbn.equals(other.isbn);
+        boolean sameGenre = this.genre.equals(other.genre);
+        boolean sameNumPages = this.numPages == other.numPages;
+        boolean sameRating = this.rating == other.rating;
+        return sameTitle && sameAuthor && samePublisher && sameYearPublished && sameIsbn && sameGenre && sameNumPages && sameRating;
+    }
 
     @Override
     public int describeContents() {
@@ -111,7 +137,7 @@ public class Book implements Parcelable, Listable {
     @Override
     public Intent getDisplayIntent(Context context) {
         Intent displayIntent = new Intent(context, BookInfoActivity.class);
-        displayIntent.putExtra(Util.INTENT_DATA_BOOK, this);
+        displayIntent.putExtra(Util.INTENT_DATA_BOOK, (Parcelable)this);
         return displayIntent;
     }
 

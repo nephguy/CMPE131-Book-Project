@@ -61,7 +61,6 @@ public class ListActivityUserLists extends ListActivityBase {
     }
 
     private boolean createNewList(String listName) {
-        System.out.println("Tried to create List with name: " + listName);
         if (listName.equals("")) {
             Util.shortToast(getApplicationContext(),"Your list must have a name");
             return false;

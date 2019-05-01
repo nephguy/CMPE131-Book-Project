@@ -1,6 +1,5 @@
 package cmpe131.cmpebookproject;
 
-import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -39,13 +38,18 @@ public class RecyclerViewListableAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ListableViewHolder holder, int position) {
-        dataset.get(position).populateListView(holder.itemView);
+        dataset
+                .get(position)
+                .populateListView(
+                        holder
+                                .itemView);
         holder.itemView.setTag(position);
 
         if (launchIntentOnClick) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //holder.getAdapterPosition()
                     Listable thisItem = dataset.get((int)v.getTag());
                     v.getContext().startActivity(thisItem.getDisplayIntent(v.getContext()));
                 }

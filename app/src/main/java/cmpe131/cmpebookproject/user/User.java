@@ -83,6 +83,15 @@ public class User implements Serializable, Parcelable {
     public void setRecommendedList(BookList recommendedList) {this.recommendedList = recommendedList;}
     public ArrayList<BookList> getCustomLists() {return customLists;}
     public void addCustomList(BookList newList) {this.customLists.add(newList);}
+    public boolean appendCustomList(Book book, int listIndex) {
+        BookList list = customLists.get(listIndex);
+        if (list.contains(book))
+            return false;
+        else {
+            list.add(book);
+            return true;
+        }
+    }
     public boolean removeCustomList(BookList list) {
         for (BookList bl : getCustomLists()) {
             if (bl.equals(list))

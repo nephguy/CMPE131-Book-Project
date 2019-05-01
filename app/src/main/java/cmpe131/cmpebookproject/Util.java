@@ -5,10 +5,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Util {
 
@@ -86,6 +89,30 @@ public class Util {
 
     public AlertDialog.Builder styleFixedAlertDialogBuilder(Context context) {
         return new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.DialogTheme));
+    }
+
+    public static void debugListAllSubViews(View view) {
+        if (!(view instanceof ViewGroup)) {
+            System.out.println("View " + getIdString(view) + " is not a ViewGroup, and has no sub-views.");
+            return;
+        }
+        ViewGroup vg = (ViewGroup)view;
+
+        /*DEBUG*/ System.out.println("Finding all views...");
+
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View v = vg.getChildAt(i);
+            if (v instanceof ViewGroup) {
+                /*DEBUG*/ System.out.println("Within ViewGroup " + Util.getIdString(vg) + " Found child ViewGroup " + Util.getIdString(v) + " (child count " + ((ViewGroup) v).getChildCount() + ")");
+                if (((ViewGroup) v).getChildCount()!= 0)
+                    debugListAllSubViews((ViewGroup)v);
+            }
+            else {
+                /*DEBUG*/ System.out.println("Within ViewGroup " + Util.getIdString(vg) + " Found View " + Util.getIdString(v));
+            }
+        }
+
+        /*DEBUG*/ System.out.println("All views found.");
     }
 
 }

@@ -17,6 +17,7 @@ import cmpe131.cmpebookproject.RecyclerViewListableAdapter;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.activity.ListActivityUserLists;
 import cmpe131.cmpebookproject.book.Book;
+import cmpe131.cmpebookproject.database.DbHelper;
 
 public class TabFragmentList extends TabFragmentBase {
 
@@ -32,9 +33,22 @@ public class TabFragmentList extends TabFragmentBase {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_list, container, false);
 
+
+
+        ArrayList<Book> allBooks = DbHelper.getInstance(getContext()).getAllBooks();
+        ArrayList<Book> testBooks = new ArrayList<>();
+        testBooks.add(allBooks.get(0));
+        testBooks.add(allBooks.get(1));
+        testBooks.add(allBooks.get(2));
+        testBooks.add(allBooks.get(3));
+        testBooks.add(allBooks.get(4));
+        testBooks.add(allBooks.get(5));
+
+
+
         RecyclerView recommendedList = view.findViewById(R.id.tab_list_layout_listrecyclerview);
         recommendedList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        RecyclerViewListableAdapter recyclerViewAdapter = new RecyclerViewListableAdapter(recommendedBooks, R.layout.listitem_book/*recommendedBooks.get(0).getListViewLayoutRes()*/, true);
+        RecyclerViewListableAdapter recyclerViewAdapter = new RecyclerViewListableAdapter(testBooks, R.layout.listitem_book/*recommendedBooks.get(0).getListViewLayoutRes()*/, true);
         recommendedList.setAdapter(recyclerViewAdapter);
 
 
