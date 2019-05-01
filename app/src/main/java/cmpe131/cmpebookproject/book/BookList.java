@@ -47,7 +47,16 @@ public class BookList extends ArrayList<Book> implements Parcelable, Listable, A
     public String toString() {
         return listName + ": " + getNumBooksString();
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BookList))
+            return false;
+        BookList otherList = (BookList)obj;
+        boolean sameList = super.equals(obj);
+        boolean sameName = listName.equals(otherList.getListName());
+        return sameName && sameList;
+    }
 
 
     @Override
