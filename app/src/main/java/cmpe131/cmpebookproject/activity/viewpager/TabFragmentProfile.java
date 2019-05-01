@@ -2,7 +2,6 @@ package cmpe131.cmpebookproject.activity.viewpager;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,8 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 
-import cmpe131.cmpebookproject.FocusFixer;
+import cmpe131.cmpebookproject.ApplicationManager;
+import cmpe131.cmpebookproject.FieldFocusTools;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Genre;
@@ -26,12 +26,8 @@ import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.database.UserDB;
 
-public class ProfileTabFragment extends Fragment {
-
-    public static final String KEY_DATA_ACTIVEUSER = "KEY_DATA_ACTIVEUSER";
-    User activeUser;
+public class TabFragmentProfile extends TabFragmentBase {
 
     EditText usernameField;
     Spinner genderSpinner;
@@ -48,26 +44,16 @@ public class ProfileTabFragment extends Fragment {
 
     DbHelper dbHelper;
 
-    // newInstance constructor for creating fragment with arguments
-    public static ProfileTabFragment newInstance(User user) {
-        ProfileTabFragment tabBaseFragment = new ProfileTabFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(KEY_DATA_ACTIVEUSER, user);
-        tabBaseFragment.setArguments(args);
-        return tabBaseFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activeUser = getArguments().getParcelable(KEY_DATA_ACTIVEUSER);
         dbHelper = DbHelper.getInstance(getContext());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_profile, container, false);
-        FocusFixer.setAllFieldsClearFocusOnFinish((ViewGroup)view.findViewById(R.id.profile_layout_const));
+        FieldFocusTools.setAllFieldsClearFocusOnFinish((ViewGroup)view.findViewById(R.id.profile_layout_const));
 
 
         usernameField = view.findViewById(R.id.profile_field_username);
@@ -169,7 +155,7 @@ public class ProfileTabFragment extends Fragment {
                 dbHelper.appendUser(activeUser, editedUser);
 
                 Toast.makeText(getContext(), "User information updated. Please login again", Toast.LENGTH_LONG).show();
-                logout();
+                ApplicationManager.logout();
             }
         });
 
@@ -180,7 +166,7 @@ public class ProfileTabFragment extends Fragment {
                 if (delete) {
                     dbHelper.deleteUser(activeUser);
                     Toast.makeText(getContext(),"Account deleted",Toast.LENGTH_LONG).show();
-                    logout();
+                    ApplicationManager.logout();
                 }
                 else {
                     Toast.makeText(getContext(),"Press again to delete account",Toast.LENGTH_LONG).show();
@@ -190,9 +176,5 @@ public class ProfileTabFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void logout() {
-        this.getActivity().finish();
     }
 }

@@ -5,7 +5,7 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cmpe131.cmpebookproject.ApplicationContextProvider;
+import cmpe131.cmpebookproject.ApplicationManager;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.user.User;
 
@@ -22,7 +22,7 @@ public class UserList extends ArrayList<User> implements Serializable {
     public boolean add(User u) {
         if(size() >= maxSize) {
             System.out.println("ERROR: DATABASE FULL");
-            Toast.makeText(ApplicationContextProvider.getContext(), "User database full! Cannot add new user", Toast.LENGTH_LONG).show();
+            Toast.makeText(ApplicationManager.getContext(), "User database full! Cannot add new user", Toast.LENGTH_LONG).show();
             return false;
         }
         else

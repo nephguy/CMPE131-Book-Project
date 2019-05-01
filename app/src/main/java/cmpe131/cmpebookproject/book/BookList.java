@@ -14,8 +14,7 @@ import cmpe131.cmpebookproject.AdapterSelectable;
 import cmpe131.cmpebookproject.Listable;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
-import cmpe131.cmpebookproject.activity.BookListActivity;
-import cmpe131.cmpebookproject.activity.ListActivityBase;
+import cmpe131.cmpebookproject.activity.ListActivityBookList;
 
 public class BookList extends ArrayList<Book> implements Parcelable, Listable, AdapterSelectable {
 
@@ -37,6 +36,17 @@ public class BookList extends ArrayList<Book> implements Parcelable, Listable, A
     public String getListName() {return listName;}
     public void setListName(String listName) {this.listName = listName;}
 
+    private String getNumBooksString() {
+        if (size() == 1)
+            return "1 book";
+        else
+            return size() + " books";
+    }
+
+    @Override
+    public String toString() {
+        return listName + ": " + getNumBooksString();
+    }
     
 
 
@@ -74,14 +84,12 @@ public class BookList extends ArrayList<Book> implements Parcelable, Listable, A
         TextView listTitle = listView.findViewById(R.id.listitem_booklist_label_listtitle);
         listTitle.setText(listName);
         TextView numBooks = listView.findViewById(R.id.listitem_booklist_label_numbooks);
-        int size = this.size();
-        if (size == 1) numBooks.setText("1 book");
-        else numBooks.setText(size + " books");
+        numBooks.setText(getNumBooksString());
     }
 
     @Nullable @Override
     public Intent getDisplayIntent(Context context) {
-        Intent displayIntent = new Intent(context, BookListActivity.class);
+        Intent displayIntent = new Intent(context, ListActivityBookList.class);
         displayIntent.putExtra(Util.INTENT_DATA_LIST_DATASET, (Parcelable)this);
         displayIntent.putExtra(Util.INTENT_DATA_LIST_LISTTITLE, this.listName);
         displayIntent.putExtra(Util.INTENT_DATA_LIST_LAYOUTRES, getListViewLayoutRes());

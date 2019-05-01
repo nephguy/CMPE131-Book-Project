@@ -1,25 +1,29 @@
 package cmpe131.cmpebookproject;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Util {
 
+    /** Intent Flags and Keys **/
+
     public static final int REQUEST_CREATE_ACCOUNT = 17371;
-    public static final String KEY_DATA_ACTIVEUSER = "KEY_DATA_ACTIVEUSER";
-    public static final String INTENT_DATA_USER = "INTENT_DATA_USER";
-    public static final String INTENT_DATA_USERNAME = "INTENT_DATA_USERNAME";
+    public static final String INTENT_DATA_NEWUSER_USERNAME = "INTENT_DATA_NEWUSER_USERNAME";
     public static final String INTENT_DATA_BOOK = "INTENT_DATA_BOOK";
     public static final String INTENT_DATA_LIST_LISTTITLE = "INTENT_DATA_LIST_LISTTITLE";
     public static final String INTENT_DATA_LIST_DATASET = "INTENT_DATA_LIST_DATASET";
     public static final String INTENT_DATA_LIST_LAYOUTRES = "INTENT_DATA_LIST_LAYOUTRES";
+    public static final String INTENT_DATA_LIST_LABELIFEMPTY = "INTENT_DATA_LIST_LABELIFEMPTY";
 
+
+    /** Utility Methods **/
 
     public static <T extends Enum> void setSpinnerSelection (Spinner spinner, Enum o) {
         int itemPos = ((ArrayAdapter<T>)spinner.getAdapter()).getPosition((T)o);
@@ -37,7 +41,7 @@ public class Util {
                     //return false;
                 }
                 else if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    FocusFixer.clearFocus(field);
+                    FieldFocusTools.clearFocus(field);
                     button.callOnClick();
                     return true;
                 } else {
@@ -69,7 +73,7 @@ public class Util {
     }
 
     public static void shortToast(String text) {
-        shortToast(ApplicationContextProvider.getContext(), text);
+        shortToast(ApplicationManager.getContext(), text);
     }
 
     public static void longToast (Context context, String text) {
@@ -77,7 +81,11 @@ public class Util {
     }
 
     public static void longToast(String text) {
-        longToast(ApplicationContextProvider.getContext(), text);
+        longToast(ApplicationManager.getContext(), text);
+    }
+
+    public AlertDialog.Builder styleFixedAlertDialogBuilder(Context context) {
+        return new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.DialogTheme));
     }
 
 }

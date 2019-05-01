@@ -83,9 +83,9 @@ public class User implements Serializable, Parcelable {
     public void setRecommendedList(BookList recommendedList) {this.recommendedList = recommendedList;}
     public ArrayList<BookList> getCustomLists() {return customLists;}
     public void addCustomList(BookList newList) {this.customLists.add(newList);}
-    public boolean removeCustomList(String listName) {
+    public boolean removeCustomList(BookList list) {
         for (BookList bl : getCustomLists()) {
-            if (bl.getListName().equals(listName))
+            if (bl.equals(list))
                 return getCustomLists().remove(bl);
         }
         return false;
@@ -93,7 +93,7 @@ public class User implements Serializable, Parcelable {
 
     @Override
     public String toString() {
-        return name + ": " + age + " " + gender.toString();
+        return name + ", " + age + ", " + gender.toString();
     }
 
     @Override

@@ -8,7 +8,7 @@
     -->
 
     <application
-        android:name=".ApplicationContextProvider"
+        android:name=".ApplicationManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,8 +18,8 @@
         <activity android:name=".activity.BookInfoActivity"></activity>
         <activity android:name=".activity.CreateAccActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.BookListActivity" />
-        <activity android:name=".activity.UserListsActivity" />
+        <activity android:name=".activity.ListActivityBookList" />
+        <activity android:name=".activity.ListActivityUserLists" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

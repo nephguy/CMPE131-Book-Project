@@ -19,7 +19,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
-import cmpe131.cmpebookproject.FocusFixer;
+import cmpe131.cmpebookproject.FieldFocusTools;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
@@ -29,7 +29,7 @@ import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
 
-import static cmpe131.cmpebookproject.Util.INTENT_DATA_USERNAME;
+import static cmpe131.cmpebookproject.Util.INTENT_DATA_NEWUSER_USERNAME;
 
 public class CreateAccActivity extends AppCompatActivity {
 
@@ -49,7 +49,7 @@ public class CreateAccActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createacc);
-        FocusFixer.setAllFieldsPassFocusOnFinish((ViewGroup)findViewById(R.id.createacc_layout_const));
+        FieldFocusTools.setAllFieldsPassFocusOnFinish((ViewGroup)findViewById(R.id.createacc_layout_const));
 
         usernameField = findViewById(R.id.createacc_field_username);
         passwordField = findViewById(R.id.createacc_field_pass);
@@ -147,7 +147,7 @@ public class CreateAccActivity extends AppCompatActivity {
                 DbHelper.getInstance(getApplicationContext()).addUser(newUser);
 
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra(INTENT_DATA_USERNAME, name);
+                returnIntent.putExtra(INTENT_DATA_NEWUSER_USERNAME, name);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }

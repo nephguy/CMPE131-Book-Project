@@ -4,27 +4,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import cmpe131.cmpebookproject.user.User;
-
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     static final int numTabs = 3;
-    private User activeUser;
 
-    public TabFragmentPagerAdapter(FragmentManager fm, User activeUser) {
+    public TabFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.activeUser = activeUser;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ListTabFragment.newInstance(activeUser);
+                return new TabFragmentList();
             case 1:
-                return SearchTabFragment.newInstance(activeUser);
+                return new TabFragmentSearch();
             case 2:
-                return ProfileTabFragment.newInstance(activeUser);
+                return new TabFragmentProfile();
             default:
                 return null;
         }

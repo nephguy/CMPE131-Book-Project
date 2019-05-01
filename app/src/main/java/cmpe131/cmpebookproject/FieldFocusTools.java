@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static android.view.View.FOCUS_DOWN;
 
 /** This is a whole lot of work just to make the virtual keyboard close when you press enter/done **/
-public class FocusFixer {
+public class FieldFocusTools {
 
     public static void clearFocus(View v) {
         InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -29,31 +29,31 @@ public class FocusFixer {
     }
 
     public static void setOnKeyListener_clearFocusOnFinish(EditText field) {
-        System.out.println("Applied FIELD_CLEAR_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(field));
         field.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    clearFocus(v);
+                    clearFocus(view);
                     return true;
                 } else {
                     return false;
                 }
             }
         });
+        System.out.println("Applied FIELD_CLEAR_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(field));
     }
 
     public static void setOnKeyListener_passFocusOnFinish(EditText field) {
-        System.out.println("Applied FIELD_PASS_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(field));
         field.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    passFocus(v);
+                    passFocus(view);
                     return true;
                 } else {
                     return false;
                 }
             }
         });
+        System.out.println("Applied FIELD_PASS_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(field));
     }
 
     public static void setAllFieldsClearFocusOnFinish (ViewGroup vg) {

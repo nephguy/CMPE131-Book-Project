@@ -1,19 +1,16 @@
 package cmpe131.cmpebookproject.activity;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import cmpe131.cmpebookproject.FocusFixer;
+import cmpe131.cmpebookproject.ApplicationManager;
+import cmpe131.cmpebookproject.FieldFocusTools;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
-import cmpe131.cmpebookproject.database.DbHelper;
-import cmpe131.cmpebookproject.user.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,15 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User loginUser = DbHelper.getInstance(getApplicationContext())
-                        .getUser(usernameField.getText().toString(), passwordField.getText().toString());
-                if (loginUser == null) {
-                    Util.shortToast(getApplicationContext(),"Invalid Login Credentials");
-                }
-                else {
-                    loginIntent.putExtra(Util.INTENT_DATA_USER, (Parcelable) loginUser);
+                if (ApplicationManager.login(usernameField.getText().toString(), passwordField.getText().toString()))
                     startActivity(loginIntent);
-                }
+                else
+                    Util.shortToast(getApplicationContext(),"Invalid Login Credentials");
             }
         });
 
@@ -58,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         usernameField = findViewById(R.id.login_field_username);
-        FocusFixer.setOnKeyListener_passFocusOnFinish(usernameField);
+        FieldFocusTools.setOnKeyListener_passFocusOnFinish(usernameField);
         passwordField = findViewById(R.id.login_field_pass);
         Util.setOnKeyListener_fieldPressButtonOnFinish(passwordField,loginButton);
 
@@ -68,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Util.REQUEST_CREATE_ACCOUNT) {
             if (resultCode == RESULT_OK) {
-                String newUserName = data.getStringExtra(Util.INTENT_DATA_USERNAME);
+                String newUserName = data.getStringExtra(Util.INTENT_DATA_NEWUSER_USERNAME);
                 usernameField.setText(newUserName);
 
                 Util.shortToast(getApplicationContext(),"Account created successfully!");

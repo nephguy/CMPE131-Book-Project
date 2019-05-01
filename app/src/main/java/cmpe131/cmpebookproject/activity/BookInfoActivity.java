@@ -2,19 +2,16 @@ package cmpe131.cmpebookproject.activity;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import cmpe131.cmpebookproject.InvalSelectionIfContains;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Book;
-import cmpe131.cmpebookproject.book.BookList;
 
-public class BookInfoActivity extends AppCompatActivity {
+public class BookInfoActivity extends UserActivityBase {
 
     Book book;
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import cmpe131.cmpebookproject.ApplicationManager;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.user.User;
@@ -24,6 +25,9 @@ public class DbHelper {
             singletonInstance = new DbHelper(context);
         return singletonInstance;
     }
+    public static synchronized DbHelper getInstance() {
+        return getInstance(ApplicationManager.getContext());
+    }
 
     private DbHelper(Context context) {
         this.context = context;
@@ -37,9 +41,6 @@ public class DbHelper {
 
 
 
-    /** used ONLY within this class
-     *
-     * parses a String of book data and turns it into a Book object **/
     private Book parseBook (String bookData) {
         String[] bookparam = parseCsvData(bookData);
         return new Book(bookparam[0],
@@ -86,14 +87,6 @@ public class DbHelper {
         return data.toArray(data.toArray(dataArray));
     }
 
-
-    /** used globally
-     *
-     * returns an ArrayList of all books
-     * if the books have already been loaded from the database, return them
-     * otherwise, retrieve them, parse them into Book objects, store them in the ArrayList allBooks, and return it
-     *
-     * you will need to use the parseBook(String) method here **/
     public ArrayList<Book> getAllBooks() {
         if (allBooks != null)
             return allBooks;
@@ -107,9 +100,6 @@ public class DbHelper {
 
         return allBooks;
     }
-
-
-
 
     public User getUser (String username, String password) {
         return getUser(username, password.hashCode());
@@ -144,17 +134,17 @@ public class DbHelper {
         return delete && add;
     }
 
-    public boolean appendUser (String oldUserName, User newUserData) {
+    public boolean appendUser (User userData) {
         User oldUser = null;
         for (User u : userDb.getUserList()) {
-            if (u.getName().equals(oldUserName))
+            if (u.getName().equals(userData.getName()))
                 oldUser = u;
         }
         if (oldUser == null)
             return false;
 
         boolean delete = userDb.getUserList().remove(oldUser);
-        boolean add = userDb.getUserList().add(newUserData);
+        boolean add = userDb.getUserList().add(userData);
         userDb.write();
         return delete && add;
     }

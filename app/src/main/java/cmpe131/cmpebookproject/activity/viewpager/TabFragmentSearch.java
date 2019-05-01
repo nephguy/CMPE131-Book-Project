@@ -2,7 +2,6 @@ package cmpe131.cmpebookproject.activity.viewpager;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,11 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 
-import cmpe131.cmpebookproject.FocusFixer;
+import cmpe131.cmpebookproject.FieldFocusTools;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.book.Genre;
-import cmpe131.cmpebookproject.user.User;
 
-public class SearchTabFragment extends Fragment {
-
-    public static final String KEY_DATA_ACTIVEUSER = "KEY_DATA_ACTIVEUSER";
-    User activeUser;
+public class TabFragmentSearch extends TabFragmentBase {
 
     Button searchButton;
     FlexboxLayout includedGenresLayout;
@@ -31,25 +26,15 @@ public class SearchTabFragment extends Fragment {
     ArrayList<Genre> includedGenres;
     ArrayList<Genre> excludedGenres;
 
-    // newInstance constructor for creating fragment with arguments
-    public static SearchTabFragment newInstance(User user) {
-        SearchTabFragment tabBaseFragment = new SearchTabFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(KEY_DATA_ACTIVEUSER, user);
-        tabBaseFragment.setArguments(args);
-        return tabBaseFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activeUser = getArguments().getParcelable(KEY_DATA_ACTIVEUSER);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_search, container, false);
-        FocusFixer.setAllFieldsPassFocusOnFinish((ViewGroup)view.findViewById(R.id.search_layout_const));
+        FieldFocusTools.setAllFieldsPassFocusOnFinish((ViewGroup)view.findViewById(R.id.search_layout_const));
 
         includedGenres = new ArrayList<>();
         includedGenresLayout = view.findViewById(R.id.search_flexbox_includedgenres);
