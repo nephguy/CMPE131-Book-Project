@@ -112,9 +112,13 @@ public class DbHelper {
 
 
     public User getUser (String username, String password) {
+        return getUser(username, password.hashCode());
+    }
+
+    public User getUser (String username, int passwordHash) {
         for (User u : userDb.getUserList()) {
             boolean userMatch = u.getName().equals(username);
-            boolean passMatch = (u.getPasswordHash() == password.hashCode());
+            boolean passMatch = (u.getPasswordHash() == passwordHash);
             if (userMatch && passMatch)
                 return u;
         }
@@ -135,6 +139,21 @@ public class DbHelper {
 
     public boolean appendUser (User oldUserData, User newUserData) {
         boolean delete = userDb.getUserList().remove(oldUserData);
+        boolean add = userDb.getUserList().add(newUserData);
+        userDb.write();
+        return delete && add;
+    }
+
+    public boolean appendUser (String oldUserName, User newUserData) {
+        User oldUser = null;
+        for (User u : userDb.getUserList()) {
+            if (u.getName().equals(oldUserName))
+                oldUser = u;
+        }
+        if (oldUser == null)
+            return false;
+
+        boolean delete = userDb.getUserList().remove(oldUser);
         boolean add = userDb.getUserList().add(newUserData);
         userDb.write();
         return delete && add;

@@ -1,9 +1,10 @@
 package cmpe131.cmpebookproject.book;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -93,30 +94,30 @@ public class Book implements Parcelable, Listable {
 
 
     @Override
-    public View getListView(LayoutInflater inflater) {
-        final View bookView = inflater.inflate(R.layout.view_listitem_book, null);
-
-        TextView title = bookView.findViewById(R.id.listitem_book_label_title);
+    public void populateListView(View listView) {
+        TextView title = listView.findViewById(R.id.listitem_book_label_title);
         title.setText(this.title);
-        TextView author = bookView.findViewById(R.id.listitem_book_label_author);
+        TextView author = listView.findViewById(R.id.listitem_book_label_author);
         author.setText(this.author);
-        TextView yearGenre = bookView.findViewById(R.id.listitem_book_label_yearANDgenre);
+        TextView yearGenre = listView.findViewById(R.id.listitem_book_label_yearANDgenre);
         yearGenre.setText(this.yearPublished + " - " + this.genre);
-        TextView pageCount = bookView.findViewById(R.id.listitem_book_label_pcount);
+        TextView pageCount = listView.findViewById(R.id.listitem_book_label_pcount);
         pageCount.setText(this.numPages + " pages");
-        TextView rating = bookView.findViewById(R.id.listitem_book_label_rating);
+        TextView rating = listView.findViewById(R.id.listitem_book_label_rating);
         rating.setText(this.rating + "/5");
+    }
 
-        final Intent bookInfoIntent = new Intent(bookView.getContext(), BookInfoActivity.class);
-        bookInfoIntent.putExtra(Util.INTENT_DATA_BOOK,this);
-        bookView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bookView.getContext().startActivity(bookInfoIntent);
-            }
-        });
+    @Nullable
+    @Override
+    public Intent getDisplayIntent(Context context) {
+        Intent displayIntent = new Intent(context, BookInfoActivity.class);
+        displayIntent.putExtra(Util.INTENT_DATA_BOOK, this);
+        return displayIntent;
+    }
 
-        return bookView;
+    @Override
+    public int getListViewLayoutRes() {
+        return R.layout.listitem_book;
     }
 }
 
