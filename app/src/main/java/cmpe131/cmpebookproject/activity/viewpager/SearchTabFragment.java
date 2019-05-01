@@ -15,6 +15,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 
+import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.user.User;
@@ -48,7 +49,7 @@ public class SearchTabFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_search, container, false);
-
+        FocusFixer.setAllFieldsPassFocusOnFinish((ViewGroup)view.findViewById(R.id.search_layout_const));
 
         includedGenres = new ArrayList<>();
         includedGenresLayout = view.findViewById(R.id.search_flexbox_includedgenres);

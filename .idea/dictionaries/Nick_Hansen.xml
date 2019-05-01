@@ -2,9 +2,20 @@
   <dictionary name="Nick Hansen">
     <words>
       <w>activeuser</w>
+      <w>arraytolist</w>
+      <w>bookinfo</w>
+      <w>booklist</w>
       <w>bookparam</w>
       <w>createacc</w>
+      <w>dgenre</w>
+      <w>forceshowemptylist</w>
+      <w>listitem</w>
+      <w>listtitle</w>
+      <w>newacc</w>
+      <w>numbooks</w>
+      <w>pcount</w>
       <w>radiopair</w>
+      <w>recommender</w>
       <w>scifi</w>
       <w>selecter</w>
     </words>

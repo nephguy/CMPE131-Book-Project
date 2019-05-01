@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="12dp"
     android:background="@drawable/listitem_border"
-    android:layout_marginBottom="8dp">
+    android:layout_margin="16dp">
 
     <TextView
-        android:id="@+id/listitem_label_title"
+        android:id="@+id/listitem_book_label_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="title_here"
@@ -19,38 +18,38 @@
         />
 
     <TextView
-        android:id="@+id/listitem_label_author"
+        android:id="@+id/listitem_book_label_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="author_here"
         android:textSize="18sp"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/listitem_label_title"
+        app:layout_constraintTop_toBottomOf="@id/listitem_book_label_title"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
     <TextView
-        android:id="@+id/listitem_label_yearAndGenre"
+        android:id="@+id/listitem_book_label_yearANDgenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="year - genre"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/listitem_label_author"
+        app:layout_constraintTop_toBottomOf="@id/listitem_book_label_author"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
     <TextView
-        android:id="@+id/listitem_label_pagecount"
+        android:id="@+id/listitem_book_label_pcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="pages"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/listitem_label_rating"
+        app:layout_constraintBottom_toTopOf="@id/listitem_book_label_rating"
         app:layout_constraintRight_toRightOf="parent"
         />
 
     <TextView
-        android:id="@+id/listitem_label_rating"
+        android:id="@+id/listitem_book_label_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/5"

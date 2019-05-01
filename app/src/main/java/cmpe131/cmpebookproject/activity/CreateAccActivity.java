@@ -19,6 +19,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
+import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
@@ -27,9 +28,8 @@ import cmpe131.cmpebookproject.recommender.Recommender;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.user.UserDB;
 
-import static cmpe131.cmpebookproject.activity.LoginActivity.INTENT_DATA_USERNAME;
+import static cmpe131.cmpebookproject.Util.INTENT_DATA_USERNAME;
 
 public class CreateAccActivity extends AppCompatActivity {
 
@@ -49,6 +49,7 @@ public class CreateAccActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createacc);
+        FocusFixer.setAllFieldsPassFocusOnFinish((ViewGroup)findViewById(R.id.createacc_layout_const));
 
         usernameField = findViewById(R.id.createacc_field_username);
         passwordField = findViewById(R.id.createacc_field_pass);
@@ -57,7 +58,6 @@ public class CreateAccActivity extends AppCompatActivity {
         genderSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
         readingHabitsSpinner = findViewById(R.id.createacc_spinner_readinghabits);
         readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
-
 
         likedGenres = new ArrayList<>();
         likedGenresLayout = findViewById(R.id.createAcc_flexbox_likedgenres);
@@ -122,7 +122,7 @@ public class CreateAccActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "No username chosen", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (UserDB.nameExists(name)) {
+                else if (DbHelper.getInstance(getApplicationContext()).usernameTaken(name)) {
                     Toast.makeText(getApplicationContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -144,7 +144,7 @@ public class CreateAccActivity extends AppCompatActivity {
                 Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
                 r.makeRecommendedBookList();
 
-                UserDB.addUser(newUser);
+                DbHelper.getInstance(getApplicationContext()).addUser(newUser);
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(INTENT_DATA_USERNAME, name);

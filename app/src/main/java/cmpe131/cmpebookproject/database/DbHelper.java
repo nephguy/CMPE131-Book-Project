@@ -9,12 +9,12 @@ import java.util.Collections;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.user.UserDB;
 
 public class DbHelper {
 
     private Context context;
     //private SerializableDb<User> userDb;
+    private UserDB userDb;
     private CsvDb bookDb;
     private ArrayList<Book> allBooks;
 
@@ -28,6 +28,7 @@ public class DbHelper {
     private DbHelper(Context context) {
         this.context = context;
         //userDb = new SerializableDb<>(context, context.getString(R.string.database_user_foldername), ".usr");
+        userDb = new UserDB(context, "UserDb.ser");
         bookDb = new CsvDb(context, "bookDB.csv");
     }
 
@@ -108,58 +109,49 @@ public class DbHelper {
     }
 
 
-    /** used when logging in
-     *
-     * returns a User based their name and password
-     * if the user database contains a user with the specified name and password, return their user object
-     * otherwise, return a null object to let the app know this was an invalid user/password combination **/
-    public User getUser(String username, String password) {
-        ArrayList<User>UserList = UserDB.readUserList();
-        for(User u : UserList)
-        {
-            if(u.getName().equals(username) && u.getPasswordHash() == password.hashCode())
+
+
+    public User getUser (String username, String password) {
+        for (User u : userDb.getUserList()) {
+            boolean userMatch = u.getName().equals(username);
+            boolean passMatch = (u.getPasswordHash() == password.hashCode());
+            if (userMatch && passMatch)
                 return u;
         }
-        System.out.println("user not found");
         return null;
     }
 
-    /** all the below methods are alerady implemented in UserList and User Class **/
 
-//
-//    /** used on the login page
-//     *
-//     * take a User object and store it within the user database
-//     * the file name for the new user should be the user's name
-//     * if a user with the same name already exists, throw an exception and do NOT store it
-//     *
-//     * example of throwing an exception:
-//     *    throw new IllegalArgumentException ("reason for the exception") **/
-//    public void addNewUser (User user) throws IllegalArgumentException {
-//
-//
-//
-//    }
-//
-//
-//    /** used on the profile page
-//     *
-//     * edit a user's data within the user database
-//     * given their name, find the corresponding row in the user database and replace it with the new User object **/
-//    public void editUser (String userName, User newUserData) {
-//
-//
-//
-//    }
-//
-//
-//    /** used on the profile page
-//     *
-//     * delete a user from the user database
-//     * given their name, find the corresponding  in the user database and delete it **/
-//    public void deleteUser (String userName) {
-//
-//
-//
-//    }
+    public boolean addUser(User user) {
+        if (usernameTaken(user.getName()))
+            return false;
+        else if (userDb.getUserList().add(user)) {
+            userDb.write();
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean appendUser (User oldUserData, User newUserData) {
+        boolean delete = userDb.getUserList().remove(oldUserData);
+        boolean add = userDb.getUserList().add(newUserData);
+        userDb.write();
+        return delete && add;
+    }
+
+
+    public boolean deleteUser (User user) {
+        boolean success = userDb.getUserList().remove(user);
+        userDb.write();
+        return success;
+    }
+
+    public boolean usernameTaken(String name) {
+        ArrayList<String> userNames = new ArrayList<>();
+        for (User u : userDb.getUserList())
+            userNames.add(u.getName());
+        return (userNames.contains(name));
+    }
+
 }

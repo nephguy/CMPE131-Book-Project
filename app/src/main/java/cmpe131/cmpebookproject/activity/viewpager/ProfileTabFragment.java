@@ -18,12 +18,15 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 
+import cmpe131.cmpebookproject.FocusFixer;
 import cmpe131.cmpebookproject.R;
+import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Genre;
+import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
-import cmpe131.cmpebookproject.user.UserDB;
+import cmpe131.cmpebookproject.database.UserDB;
 
 public class ProfileTabFragment extends Fragment {
 
@@ -43,6 +46,8 @@ public class ProfileTabFragment extends Fragment {
     ArrayList<Genre> likedGenres;
     ArrayList<Genre> dislikedGenres;
 
+    DbHelper dbHelper;
+
     // newInstance constructor for creating fragment with arguments
     public static ProfileTabFragment newInstance(User user) {
         ProfileTabFragment tabBaseFragment = new ProfileTabFragment();
@@ -56,11 +61,13 @@ public class ProfileTabFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activeUser = getArguments().getParcelable(KEY_DATA_ACTIVEUSER);
+        dbHelper = DbHelper.getInstance(getContext());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_tab_profile, container, false);
+        FocusFixer.setAllFieldsClearFocusOnFinish((ViewGroup)view.findViewById(R.id.profile_layout_const));
 
 
         usernameField = view.findViewById(R.id.profile_field_username);
@@ -71,11 +78,11 @@ public class ProfileTabFragment extends Fragment {
 
         genderSpinner = view.findViewById(R.id.profile_spinner_gender);
         genderSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
-        setSpinnerSelection(genderSpinner,activeUser.getGender());
+        Util.setSpinnerSelection(genderSpinner,activeUser.getGender());
 
         readingHabitsSpinner = view.findViewById(R.id.profile_spinner_readinghabits);
         readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
-        setSpinnerSelection(readingHabitsSpinner,activeUser.getReadingHabits());
+        Util.setSpinnerSelection(readingHabitsSpinner,activeUser.getReadingHabits());
 
         likedGenres = activeUser.getLikedGenres();
         likedGenresLayout = view.findViewById(R.id.profile_flexbox_likedgenres);
@@ -139,7 +146,7 @@ public class ProfileTabFragment extends Fragment {
                 String ageString = ageField.getText().toString();
                 ReadingHabits readingHabits = (ReadingHabits) readingHabitsSpinner.getSelectedItem();
 
-                if (UserDB.nameExists(name)) {
+                if (dbHelper.usernameTaken(name)) {
                     Toast.makeText(getContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -154,8 +161,12 @@ public class ProfileTabFragment extends Fragment {
                 editedUser.setLikedGenres(likedGenres);
                 editedUser.setDislikedGenres(dislikedGenres);
 
-                UserDB.deleteUser(activeUser);
-                UserDB.addUser(editedUser);
+                if (editedUser.equals(activeUser)) {
+                    Toast.makeText(getContext(), "No changes made - did not update user", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dbHelper.appendUser(activeUser, editedUser);
 
                 Toast.makeText(getContext(), "User information updated. Please login again", Toast.LENGTH_LONG).show();
                 logout();
@@ -167,7 +178,7 @@ public class ProfileTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (delete) {
-                    UserDB.deleteUser(activeUser);
+                    dbHelper.deleteUser(activeUser);
                     Toast.makeText(getContext(),"Account deleted",Toast.LENGTH_LONG).show();
                     logout();
                 }
@@ -179,12 +190,6 @@ public class ProfileTabFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private static <T extends Enum> void setSpinnerSelection (Spinner spinner, Enum o) {
-        int itemPos = ((ArrayAdapter<T>)spinner.getAdapter()).getPosition((T)o);
-        //System.out.println("INDEX OF " + o + " IN SPINNER: " + itemPos);
-        spinner.setSelection(itemPos);
     }
 
     private void logout() {
