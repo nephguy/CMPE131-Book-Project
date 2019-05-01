@@ -28,9 +28,9 @@ public class FocusFixer {
             clearFocus(v);
     }
 
-    public static void setOnKeyListener_clearFocusOnFinish(View v) {
-        System.out.println("Applied FIELD_CLEAR_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(v));
-        v.setOnKeyListener(new View.OnKeyListener() {
+    public static void setOnKeyListener_clearFocusOnFinish(EditText field) {
+        System.out.println("Applied FIELD_CLEAR_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(field));
+        field.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
                     clearFocus(v);
@@ -42,9 +42,9 @@ public class FocusFixer {
         });
     }
 
-    public static void setOnKeyListener_passFocusOnFinish(View v) {
-        System.out.println("Applied FIELD_PASS_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(v));
-        v.setOnKeyListener(new View.OnKeyListener() {
+    public static void setOnKeyListener_passFocusOnFinish(EditText field) {
+        System.out.println("Applied FIELD_PASS_FOCUS_ON_FINISH KeyListener to field " + Util.getIdString(field));
+        field.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
                     passFocus(v);
@@ -60,16 +60,16 @@ public class FocusFixer {
         // could be faster by instead applying KeyListeners while looping to get all fields
         // but this is much more readable and easier to debug
         ArrayList<EditText> allFields = getAllFields(vg, false);
-        for (EditText e : allFields)
-            setOnKeyListener_clearFocusOnFinish(e);
+        for (EditText field : allFields)
+            setOnKeyListener_clearFocusOnFinish(field);
     }
 
     public static void setAllFieldsPassFocusOnFinish (ViewGroup vg) {
         // could be faster by instead applying KeyListeners while looping to get all fields
         // but this is much more readable and easier to debug
         ArrayList<EditText> allFields = getAllFields(vg, false);
-        for (EditText e : allFields)
-            setOnKeyListener_passFocusOnFinish(e);
+        for (EditText field : allFields)
+            setOnKeyListener_passFocusOnFinish(field);
     }
 
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.activity.viewpager.TabFragmentPagerAdapter;
+import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.user.User;
 
 import static cmpe131.cmpebookproject.Util.INTENT_DATA_USER;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activeUser = DbHelper.getInstance(getApplicationContext()).getUser(activeUser.getName(), activeUser.getPasswordHash());
+    }
 }

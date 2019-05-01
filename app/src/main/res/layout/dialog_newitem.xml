@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp">
+
+    <TextView
+        android:id="@+id/dialog_label_itemname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        />
+
+    <EditText
+        android:id="@+id/dialog_field_itemname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+        />
+
+</LinearLayout>

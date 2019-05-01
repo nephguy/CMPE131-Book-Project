@@ -58,7 +58,7 @@ public class BookInfoActivity extends AppCompatActivity {
         final AlertDialog addToListDialog = new AlertDialog.Builder(this)
                 .setTitle(addToListButton.getText())
                 .setNegativeButton("Cancel", null)
-                .setAdapter(new InvalSelectionIfContains<BookList>(this,R.layout.support_simple_spinner_dropdown_item,null,book),addToList)
+                //.setAdapter(new InvalSelectionIfContains<BookList>(this,R.layout.support_simple_spinner_dropdown_item,null,book),addToList)
                 .create();
         addToListButton.setOnClickListener(new View.OnClickListener() {
             @Override

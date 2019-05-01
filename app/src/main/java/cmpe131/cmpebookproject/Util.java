@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -14,10 +15,10 @@ public class Util {
     public static final String KEY_DATA_ACTIVEUSER = "KEY_DATA_ACTIVEUSER";
     public static final String INTENT_DATA_USER = "INTENT_DATA_USER";
     public static final String INTENT_DATA_USERNAME = "INTENT_DATA_USERNAME";
-    public static final String INTENT_DATA_LISTTITLE = "INTENT_DATA_LISTTITLE";
-    public static final String INTENT_DATA_ARRAYTOLIST = "INTENT_DATA_ARRAYTOLIST";
-    public static final String INTENT_DATA_LIST_FORCESHOWEMPTYLIST = "INTENT_DATA_LIST_FORCESHOWEMPTYLIST";
     public static final String INTENT_DATA_BOOK = "INTENT_DATA_BOOK";
+    public static final String INTENT_DATA_LIST_LISTTITLE = "INTENT_DATA_LIST_LISTTITLE";
+    public static final String INTENT_DATA_LIST_DATASET = "INTENT_DATA_LIST_DATASET";
+    public static final String INTENT_DATA_LIST_LAYOUTRES = "INTENT_DATA_LIST_LAYOUTRES";
 
 
     public static <T extends Enum> void setSpinnerSelection (Spinner spinner, Enum o) {
@@ -26,17 +27,18 @@ public class Util {
         spinner.setSelection(itemPos);
     }
 
-    public static void setOnKeyListener_fieldPressButtonOnFinish(final View v, final Button b) {
-        System.out.println("Applied FIELD_PRESS_BUTTON_ON_FINISH KeyListener to field " + getIdString(v));
-        v.setOnKeyListener(new View.OnKeyListener() {
+    public static void setOnKeyListener_fieldPressButtonOnFinish(final EditText field, final View button) {
+        System.out.println("Applied FIELD_PRESS_BUTTON_ON_FINISH KeyListener to field " + getIdString(field));
+        field.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View view, int keyCode, KeyEvent event) {
-                if (b == null) {
-                    System.out.println("ERROR: BUTTON WAS NOT INSTANTIATED BEFORE PASSING INTO FUNCTION");
-                    return false;
+                if (button == null) {
+                    throw new IllegalArgumentException("Button was not instantiated before passing into this function");
+                    //System.out.println("ERROR: BUTTON WAS NOT INSTANTIATED BEFORE PASSING INTO FUNCTION");
+                    //return false;
                 }
                 else if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    FocusFixer.clearFocus(v);
-                    b.callOnClick();
+                    FocusFixer.clearFocus(field);
+                    button.callOnClick();
                     return true;
                 } else {
                     return false;

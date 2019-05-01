@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cmpe131.cmpebookproject">
 
+    <!--
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    -->
 
     <application
         android:name=".ApplicationContextProvider"
@@ -16,7 +18,8 @@
         <activity android:name=".activity.BookInfoActivity"></activity>
         <activity android:name=".activity.CreateAccActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.ListActivity" />
+        <activity android:name=".activity.BookListActivity" />
+        <activity android:name=".activity.UserListsActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
