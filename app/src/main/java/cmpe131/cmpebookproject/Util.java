@@ -24,6 +24,7 @@ public class Util {
     public static final String INTENT_DATA_LIST_DATASET = "INTENT_DATA_LIST_DATASET";
     public static final String INTENT_DATA_LIST_LAYOUTRES = "INTENT_DATA_LIST_LAYOUTRES";
     public static final String INTENT_DATA_LIST_LABELIFEMPTY = "INTENT_DATA_LIST_LABELIFEMPTY";
+    public static final String INTENT_DATA_SEARCHCRITERIA = "INTENT_DATA_SEARCHCRITERIA";
 
 
     /** Utility Methods **/
@@ -91,28 +92,29 @@ public class Util {
         return new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.DialogTheme));
     }
 
-    public static void debugListAllSubViews(View view) {
+    public static void debugListAllChildViews(View view) {
         if (!(view instanceof ViewGroup)) {
-            System.out.println("View " + getIdString(view) + " is not a ViewGroup, and has no sub-views.");
+            System.out.println(getIdString(view) + " is not a ViewGroup, and hence has no child views");
             return;
         }
         ViewGroup vg = (ViewGroup)view;
 
-        /*DEBUG*/ System.out.println("Finding all views...");
+        System.out.println("Finding all views within " + getIdString(vg));
 
         for (int i = 0; i < vg.getChildCount(); i++) {
             View v = vg.getChildAt(i);
             if (v instanceof ViewGroup) {
-                /*DEBUG*/ System.out.println("Within ViewGroup " + Util.getIdString(vg) + " Found child ViewGroup " + Util.getIdString(v) + " (child count " + ((ViewGroup) v).getChildCount() + ")");
-                if (((ViewGroup) v).getChildCount()!= 0)
-                    debugListAllSubViews((ViewGroup)v);
+                int childCount = ((ViewGroup)v).getChildCount();
+                System.out.println("Within ViewGroup " + getIdString(vg) + " Found child ViewGroup " + getIdString(v) + " (child count " + childCount + ")");
+                if (childCount != 0)
+                    debugListAllChildViews(v);
             }
             else {
-                /*DEBUG*/ System.out.println("Within ViewGroup " + Util.getIdString(vg) + " Found View " + Util.getIdString(v));
+                System.out.println("Within ViewGroup " + getIdString(vg) + " Found View " + getIdString(v));
             }
         }
 
-        /*DEBUG*/ System.out.println("All views found.");
+        System.out.println("All views found.");
     }
 
 }

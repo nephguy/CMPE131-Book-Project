@@ -16,14 +16,14 @@ import cmpe131.cmpebookproject.Util;
 
 public abstract class ListActivityBase extends UserActivityBase {
 
-    ArrayList<? extends Listable> dataset;
-    int viewLayoutRes;
-    String textIfEmpty;
+    protected ArrayList<? extends Listable> dataset;
+    protected int viewLayoutRes;
+    protected String textIfEmpty;
 
-    TextView listTitle;
-    RecyclerView listRecyclerView;
-    TextView emptyLabel;
-    Button actionButton;
+    protected TextView listTitle;
+    protected RecyclerView listRecyclerView;
+    protected TextView emptyLabel;
+    protected Button actionButton;
     private RecyclerViewListableAdapter recyclerViewAdapter;
 
     @Override
@@ -53,9 +53,10 @@ public abstract class ListActivityBase extends UserActivityBase {
 
     private void checkListEmpty() {
         emptyLabel.setText(textIfEmpty);
-//        if (dataset == null)
-//            emptyLabel.setVisibility(View.VISIBLE);
-        if (dataset.size() == 0)
+        if (dataset == null)
+            //TODO - SHOW LOADING ICON
+            emptyLabel.setVisibility(View.VISIBLE);
+        else if (dataset.size() == 0)
             emptyLabel.setVisibility(View.VISIBLE);
         else
             emptyLabel.setVisibility(View.GONE);

@@ -20,6 +20,7 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ListActivityBookList" />
         <activity android:name=".activity.ListActivityUserLists" />
+        <activity android:name=".activity.ListActivitySearch" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

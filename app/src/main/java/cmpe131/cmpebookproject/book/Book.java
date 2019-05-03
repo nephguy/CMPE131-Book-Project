@@ -6,7 +6,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -27,6 +26,7 @@ public class Book implements Parcelable, Listable, Serializable {
     private int numPages;
     private int yearPublished;
     private Genre genre;
+    private transient float similarityIndex = 0f; // used for searches. transient means it won't be saved during serialization
 
     public Book(String title, String author, String isbn, float rating, String publisher,  int numPages, int yearPublished, Genre genre) {
         this.title = title;
@@ -54,6 +54,8 @@ public class Book implements Parcelable, Listable, Serializable {
     public int getNumPages() {return numPages;}
     public void setNumPages(int numPages) {this.numPages = numPages;}
     public float getRating() {return rating;}
+    public void setSimilarityIndex(float similarityIndex) {this.similarityIndex = similarityIndex;}
+    public float getSimilarityIndex() {return similarityIndex;}
 
     @Override
     public String toString() {

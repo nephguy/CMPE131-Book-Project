@@ -54,7 +54,7 @@
             android:id="@+id/search_field_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:hint="Title..."
             app:layout_constraintBaseline_toBaselineOf="@id/search_label_title"
             app:layout_constraintLeft_toRightOf="@id/search_label_title"
@@ -76,7 +76,7 @@
             android:id="@+id/search_field_author"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:hint="Author..."
             app:layout_constraintBaseline_toBaselineOf="@id/search_label_author"
             app:layout_constraintLeft_toRightOf="@id/search_label_author"
@@ -84,7 +84,7 @@
             />
 
         <TextView
-            android:id="@+id/search_label_publishfrom"
+            android:id="@+id/search_label_publishfloor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Published From"
@@ -95,93 +95,93 @@
             />
 
         <EditText
-            android:id="@+id/search_field_publishfrom"
+            android:id="@+id/search_field_publishfloor"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="year"
-            app:layout_constraintBaseline_toBaselineOf="@id/search_label_publishfrom"
-            app:layout_constraintLeft_toRightOf="@id/search_label_publishfrom"
+            app:layout_constraintBaseline_toBaselineOf="@id/search_label_publishfloor"
+            app:layout_constraintLeft_toRightOf="@id/search_label_publishfloor"
             />
 
         <TextView
-            android:id="@+id/search_label_publishto"
+            android:id="@+id/search_label_publishceiling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="to"
             android:paddingRight="8dp"
             android:paddingBottom="24dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/search_field_publishfrom"
-            app:layout_constraintLeft_toRightOf="@id/search_field_publishfrom"
+            app:layout_constraintBaseline_toBaselineOf="@id/search_field_publishfloor"
+            app:layout_constraintLeft_toRightOf="@id/search_field_publishfloor"
             />
 
         <EditText
-            android:id="@+id/search_field_publishto"
+            android:id="@+id/search_field_publishceiling"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="year"
-            app:layout_constraintBaseline_toBaselineOf="@id/search_label_publishto"
-            app:layout_constraintLeft_toRightOf="@id/search_label_publishto"
+            app:layout_constraintBaseline_toBaselineOf="@id/search_label_publishceiling"
+            app:layout_constraintLeft_toRightOf="@id/search_label_publishceiling"
             />
 
         <TextView
-            android:id="@+id/search_label_pagefrom"
+            android:id="@+id/search_label_pagefloor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Page Count From"
             android:paddingRight="8dp"
             android:paddingBottom="24dp"
             app:layout_constraintLeft_toLeftOf="@id/search_layout_const"
-            app:layout_constraintTop_toBottomOf="@id/search_label_publishfrom"
+            app:layout_constraintTop_toBottomOf="@id/search_label_publishfloor"
             />
 
         <EditText
-            android:id="@+id/search_field_pagefrom"
+            android:id="@+id/search_field_pagefloor"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="pages"
-            app:layout_constraintBaseline_toBaselineOf="@id/search_label_pagefrom"
-            app:layout_constraintLeft_toRightOf="@id/search_label_pagefrom"
+            app:layout_constraintBaseline_toBaselineOf="@id/search_label_pagefloor"
+            app:layout_constraintLeft_toRightOf="@id/search_label_pagefloor"
             />
 
         <TextView
-            android:id="@+id/search_label_pageto"
+            android:id="@+id/search_label_pageceiling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="to"
             android:paddingRight="8dp"
             android:paddingBottom="24dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/search_field_pagefrom"
-            app:layout_constraintLeft_toRightOf="@id/search_field_pagefrom"
+            app:layout_constraintBaseline_toBaselineOf="@id/search_field_pagefloor"
+            app:layout_constraintLeft_toRightOf="@id/search_field_pagefloor"
             />
 
         <EditText
-            android:id="@+id/search_field_pageto"
+            android:id="@+id/search_field_pageceiling"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:hint="pages"
-            app:layout_constraintBaseline_toBaselineOf="@id/search_label_pageto"
-            app:layout_constraintLeft_toRightOf="@id/search_label_pageto"
+            app:layout_constraintBaseline_toBaselineOf="@id/search_label_pageceiling"
+            app:layout_constraintLeft_toRightOf="@id/search_label_pageceiling"
             />
 
         <TextView
-            android:id="@+id/search_label_includedgenres"
+            android:id="@+id/search_label_preferredgenres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Included Genres:"
+            android:text="Preferred Genres:"
             android:paddingBottom="8dp"
             app:layout_constraintLeft_toLeftOf="@id/search_layout_const"
-            app:layout_constraintTop_toBottomOf="@id/search_label_pagefrom"
+            app:layout_constraintTop_toBottomOf="@id/search_label_pagefloor"
             />
 
         <include
-            android:id="@+id/search_flexbox_includedgenres"
+            android:id="@+id/search_flexbox_preferredgenres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/search_label_includedgenres"
+            app:layout_constraintTop_toBottomOf="@id/search_label_preferredgenres"
             layout="@layout/view_flexbox"
             />
 
@@ -193,7 +193,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="24dp"
             app:layout_constraintLeft_toLeftOf="@id/search_layout_const"
-            app:layout_constraintTop_toBottomOf="@id/search_flexbox_includedgenres"
+            app:layout_constraintTop_toBottomOf="@id/search_flexbox_preferredgenres"
             />
 
         <include
