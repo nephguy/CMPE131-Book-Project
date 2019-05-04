@@ -58,11 +58,7 @@ public class TabFragmentSearch extends TabFragmentBase {
         preferredGenres = new ArrayList<>();
         preferredGenresLayout = view.findViewById(R.id.search_flexbox_preferredgenres);
         for (Genre g : Genre.values()) {
-            CheckBox genreButton = new CheckBox(getContext());
-
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32, 0, 0, 16);
-            genreButton.setLayoutParams(params);
+            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
 
             genreButton.setText(g.toString());
             genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -81,11 +77,7 @@ public class TabFragmentSearch extends TabFragmentBase {
         excludedGenres = new ArrayList<>();
         excludedGenresLayout = view.findViewById(R.id.search_flexbox_excludedgenres);
         for (Genre g : Genre.values()) {
-            CheckBox genreButton = new CheckBox(getContext());
-
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32, 0, 0, 16);
-            genreButton.setLayoutParams(params);
+            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
 
             genreButton.setText(g.toString());
             genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

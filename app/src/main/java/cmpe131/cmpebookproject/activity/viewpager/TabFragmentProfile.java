@@ -74,10 +74,7 @@ public class TabFragmentProfile extends TabFragmentBase {
         likedGenres = new ArrayList<>();
         likedGenresLayout = view.findViewById(R.id.profile_flexbox_likedgenres);
         for (Genre g : Genre.values()) {
-            CheckBox genreButton = new CheckBox(getContext());
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 32, 16);
-            genreButton.setLayoutParams(params);
+            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
 
             if (activeUser.getLikedGenres().contains(g)) {
                 likedGenres.add(g);
@@ -101,10 +98,7 @@ public class TabFragmentProfile extends TabFragmentBase {
         dislikedGenres = new ArrayList<>();
         dislikedGenresLayout = view.findViewById(R.id.profile_flexbox_dislikedgenres);
         for (Genre g : Genre.values()) {
-            CheckBox genreButton = new CheckBox(getContext());
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 32, 16);
-            genreButton.setLayoutParams(params);
+            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
 
             if (activeUser.getDislikedGenres().contains(g)){
                 dislikedGenres.add(g);
@@ -137,7 +131,7 @@ public class TabFragmentProfile extends TabFragmentBase {
                 ReadingHabits readingHabits = (ReadingHabits) readingHabitsSpinner.getSelectedItem();
 
                 if (dbHelper.usernameTaken(name)) {
-                    Toast.makeText(getContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
+                    Util.shortToast(getContext(), "A user with that name already exists!");
                     return;
                 }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingEnd="16dp"
+    android:paddingStart="0dp"
+    android:layout_marginBottom="32dp">
+
+    <!--
+        TODO - MAKE THIS WORK???
+        For some reason, layout_margin does nothing????
+        and padding only affects the TextView's alignment relative to the checkbox itself.
+        Wtf google. Fix yo shit.
+    -->
+</CheckBox>

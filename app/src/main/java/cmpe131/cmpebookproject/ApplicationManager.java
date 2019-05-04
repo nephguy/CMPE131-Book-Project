@@ -1,9 +1,8 @@
 package cmpe131.cmpebookproject;
-import android.app.Activity;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 
 import cmpe131.cmpebookproject.activity.LoginActivity;
 import cmpe131.cmpebookproject.database.DbHelper;
@@ -20,9 +19,7 @@ public class ApplicationManager extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         sContext = getApplicationContext();
-
     }
 
     /**

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Book;
-import cmpe131.cmpebookproject.database.DbHelper;
 import cmpe131.cmpebookproject.search.SearchCriteria;
 
 public class ListActivitySearch extends ListActivityBase {
@@ -20,8 +19,7 @@ public class ListActivitySearch extends ListActivityBase {
 
         actionButton.setVisibility(View.GONE);
         searchCriteria = getIntent().getParcelableExtra(Util.INTENT_DATA_SEARCHCRITERIA);
-        ArrayList<Book> allBooks = DbHelper.getInstance(getApplicationContext()).getAllBooks();
-        ArrayList<Book> searchResults = searchCriteria.getSearchResults(allBooks);
+        ArrayList<Book> searchResults = searchCriteria.getSearchResults();
         updateList(searchResults);
 //        for (Book b : searchResults) {
 //            System.out.println(b.getSimilarityIndex() + " " + b.toString());

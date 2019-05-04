@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -91,6 +92,20 @@ public class Util {
 
     public AlertDialog.Builder styleFixedAlertDialogBuilder(Context context) {
         return new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.DialogTheme));
+    }
+
+    /** only used because of a weird bug with checkboxes made from xml layout files.
+     *
+     *  See {@link cmpe131.cmpebookproject.R.layout#view_checkbox XML CheckBox}
+     * **/
+    public static CheckBox makeCheckBoxWithMargin(Context context) {
+        CheckBox checkBox = new CheckBox(context);
+
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, 0, 32, 16);
+        checkBox.setLayoutParams(params);
+
+        return checkBox;
     }
 
     public static void debugListAllChildViews(View view) {

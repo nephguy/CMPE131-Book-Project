@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.FieldFocusTools;
+import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Book;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.book.Genre;
@@ -62,11 +63,7 @@ public class CreateAccActivity extends AppCompatActivity {
         likedGenres = new ArrayList<>();
         likedGenresLayout = findViewById(R.id.createAcc_flexbox_likedgenres);
         for (Genre g : Genre.values()) {
-            CheckBox genreButton = new CheckBox(getApplicationContext());
-
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32, 0, 0, 16);
-            genreButton.setLayoutParams(params);
+            CheckBox genreButton = Util.makeCheckBoxWithMargin(getApplicationContext());
 
             genreButton.setText(g.toString());
             genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -85,11 +82,7 @@ public class CreateAccActivity extends AppCompatActivity {
         dislikedGenres = new ArrayList<>();
         dislikedGenresLayout = findViewById(R.id.createAcc_flexbox_dislikedgenres);
         for (Genre g : Genre.values()) {
-            CheckBox genreButton = new CheckBox(getApplicationContext());
-
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32, 0, 0, 16);
-            genreButton.setLayoutParams(params);
+            CheckBox genreButton = Util.makeCheckBoxWithMargin(getApplicationContext());
 
             genreButton.setText(g.toString());
             genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -119,23 +112,23 @@ public class CreateAccActivity extends AppCompatActivity {
 
                 // final checks
                 if (name.equals("")) {
-                    Toast.makeText(getApplicationContext(), "No username chosen", Toast.LENGTH_SHORT).show();
+                    Util.shortToast("No username chosen");
                     return;
                 }
                 else if (DbHelper.getInstance(getApplicationContext()).usernameTaken(name)) {
-                    Toast.makeText(getApplicationContext(), "A user with that name already exists!", Toast.LENGTH_LONG).show();
+                    Util.shortToast("A user with that name already exists!");
                     return;
                 }
                 else if (pass.equals("")) {
-                    Toast.makeText(getApplicationContext(), "No password chosen", Toast.LENGTH_SHORT).show();
+                    Util.shortToast("No password chosen");
                     return;
                 }
                 else if (ageString.equals("")) {
-                    Toast.makeText(getApplicationContext(), "No age specified", Toast.LENGTH_SHORT).show();
+                    Util.shortToast("No age specified");
                     return;
                 }
                 else if (likedGenres.size() == 0) {
-                    Toast.makeText(getApplicationContext(), "You must specify at least one liked genre", Toast.LENGTH_SHORT).show();
+                    Util.shortToast("You must specify at least one liked genre");
                     return;
                 }
 

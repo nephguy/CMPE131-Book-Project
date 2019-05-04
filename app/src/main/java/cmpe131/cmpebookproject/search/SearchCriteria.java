@@ -26,6 +26,7 @@ public class SearchCriteria implements Parcelable {
     private int pcountCeiling;
     private ArrayList<Genre> preferredGenres;
     private ArrayList<Genre> excludedGenres;
+    private transient ArrayList<Book> searchSpace = DbHelper.getInstance().getAllBooks();
     private transient ArrayList<Book> searchResults;
     private transient int numResults = DEFAULT_MAX_RESULTS;
 
@@ -87,6 +88,8 @@ public class SearchCriteria implements Parcelable {
     public void setExcludedGenres(ArrayList<Genre> excludedGenres) { this.excludedGenres = excludedGenres; }
     public int getNumResults() { return numResults; }
     public void setNumResults(int numResults) { this.numResults = numResults; }
+    public ArrayList<Book> getSearchSpace() { return searchSpace; }
+    public void setSearchSpace(ArrayList<Book> searchSpace) { this.searchSpace = searchSpace; }
 
     @Override
     public boolean equals(Object obj) {
@@ -155,12 +158,8 @@ public class SearchCriteria implements Parcelable {
         );
     }
 
-    public ArrayList<Book> getSearchResults() {
-        return getSearchResults(DbHelper.getInstance().getAllBooks());
-    }
-
     /** The big boy method **/
-    public ArrayList<Book> getSearchResults(ArrayList<Book> searchSpace) {
+    public ArrayList<Book> getSearchResults() {
         if (searchResults != null)
             return searchResults;
         searchResults = new ArrayList<>();
