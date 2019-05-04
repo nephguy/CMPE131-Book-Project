@@ -17,7 +17,6 @@ import cmpe131.cmpebookproject.RecyclerViewListableAdapter;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.activity.ListActivityUserLists;
 import cmpe131.cmpebookproject.book.Book;
-import cmpe131.cmpebookproject.database.DbHelper;
 
 public class TabFragmentList extends TabFragmentBase {
 
@@ -31,7 +30,7 @@ public class TabFragmentList extends TabFragmentBase {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_tab_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab_list, container, false);
 
         RecyclerView recommendedList = view.findViewById(R.id.tab_list_layout_listrecyclerview);
         recommendedList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));

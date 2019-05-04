@@ -1,7 +1,9 @@
 package cmpe131.cmpebookproject.activity.viewpager;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -38,7 +39,7 @@ public class TabFragmentProfile extends TabFragmentBase {
     FlexboxLayout dislikedGenresLayout;
     Button updateButton;
     Button deleteButton;
-    boolean delete = false;
+    boolean confirmDeleteAccount = false;
 
     ArrayList<Genre> likedGenres;
     ArrayList<Genre> dislikedGenres;
@@ -53,7 +54,7 @@ public class TabFragmentProfile extends TabFragmentBase {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_tab_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab_profile, container, false);
         FieldFocusTools.setAllFieldsClearFocusOnFinish((ViewGroup)view.findViewById(R.id.profile_layout_const));
 
 
@@ -61,7 +62,7 @@ public class TabFragmentProfile extends TabFragmentBase {
         usernameField.setHint(activeUser.getName());
 
         ageField = view.findViewById(R.id.profile_field_age);
-        ageField.setHint(new Integer(activeUser.getAge()).toString());
+        ageField.setHint(Integer.toString(activeUser.getAge()));
 
         genderSpinner = view.findViewById(R.id.profile_spinner_gender);
         genderSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
@@ -73,53 +74,11 @@ public class TabFragmentProfile extends TabFragmentBase {
 
         likedGenres = new ArrayList<>();
         likedGenresLayout = view.findViewById(R.id.profile_flexbox_likedgenres);
-        for (Genre g : Genre.values()) {
-            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
-
-            if (activeUser.getLikedGenres().contains(g)) {
-                likedGenres.add(g);
-                genreButton.setChecked(true);
-            }
-
-            genreButton.setText(g.toString());
-            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
-                    if (isChecked)
-                        likedGenres.add(thisGenre);
-                    else
-                        likedGenres.remove(thisGenre);
-                }
-            });
-            likedGenresLayout.addView(genreButton);
-        }
+        Util.populateGenreSelector(likedGenres, likedGenresLayout, activeUser.getLikedGenres());
 
         dislikedGenres = new ArrayList<>();
         dislikedGenresLayout = view.findViewById(R.id.profile_flexbox_dislikedgenres);
-        for (Genre g : Genre.values()) {
-            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
-
-            if (activeUser.getDislikedGenres().contains(g)){
-                dislikedGenres.add(g);
-                genreButton.setChecked(true);
-            }
-
-
-            genreButton.setText(g.toString());
-            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
-                    if (isChecked)
-                        dislikedGenres.add(thisGenre);
-                    else
-                        dislikedGenres.remove(thisGenre);
-                }
-            });
-            dislikedGenresLayout.addView(genreButton);
-        }
-
+        Util.populateGenreSelector(dislikedGenres, dislikedGenresLayout, activeUser.getDislikedGenres());
 
         updateButton = view.findViewById(R.id.profile_button_update);
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -162,18 +121,34 @@ public class TabFragmentProfile extends TabFragmentBase {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (delete) {
-                    dbHelper.deleteUser(activeUser);
-                    Util.shortToast(getContext(),"Account deleted");
-                    ApplicationManager.logout();
+                if (confirmDeleteAccount) {
+                    AlertDialog deleteDialog = Util.styleFixedAlertDialogBuilder(getContext())
+                            .setMessage("Are you sure you want to delete your account? This action cannot be undone.")
+                            .setNegativeButton("Cancel", null)
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dbHelper.deleteUser(activeUser);
+                                    Util.shortToast(getContext(),"Account deleted");
+                                    ApplicationManager.logout();
+                                }
+                            })
+                            .create();
+                    deleteDialog.show();
                 }
                 else {
-                    Util.longToast(getContext(),"Press again to delete account");
-                    delete = true;
+                    Util.longToast(getContext(),"Press again to delete your account");
+                    confirmDeleteAccount = true;
                 }
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        confirmDeleteAccount = false;
     }
 }

@@ -62,42 +62,11 @@ public class CreateAccActivity extends AppCompatActivity {
 
         likedGenres = new ArrayList<>();
         likedGenresLayout = findViewById(R.id.createAcc_flexbox_likedgenres);
-        for (Genre g : Genre.values()) {
-            CheckBox genreButton = Util.makeCheckBoxWithMargin(getApplicationContext());
-
-            genreButton.setText(g.toString());
-            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
-                    if (isChecked)
-                        likedGenres.add(thisGenre);
-                    else
-                        likedGenres.remove(thisGenre);
-                }
-            });
-            likedGenresLayout.addView(genreButton);
-        }
+        Util.populateGenreSelector(likedGenres, likedGenresLayout, null);
 
         dislikedGenres = new ArrayList<>();
         dislikedGenresLayout = findViewById(R.id.createAcc_flexbox_dislikedgenres);
-        for (Genre g : Genre.values()) {
-            CheckBox genreButton = Util.makeCheckBoxWithMargin(getApplicationContext());
-
-            genreButton.setText(g.toString());
-            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
-                    if (isChecked)
-                        dislikedGenres.add(thisGenre);
-                    else
-                        dislikedGenres.remove(thisGenre);
-                }
-            });
-            dislikedGenresLayout.addView(genreButton);
-        }
-
+        Util.populateGenreSelector(dislikedGenres, dislikedGenresLayout, null);
 
         createButton = findViewById(R.id.createacc_button_create);
         createButton.setOnClickListener(new View.OnClickListener() {

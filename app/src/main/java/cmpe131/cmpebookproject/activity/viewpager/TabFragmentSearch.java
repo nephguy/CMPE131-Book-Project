@@ -45,7 +45,7 @@ public class TabFragmentSearch extends TabFragmentBase {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_tab_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab_search, container, false);
         FieldFocusTools.setAllFieldsPassFocusOnFinish((ViewGroup)view.findViewById(R.id.search_layout_const));
 
         title = view.findViewById(R.id.search_field_title);
@@ -57,41 +57,11 @@ public class TabFragmentSearch extends TabFragmentBase {
 
         preferredGenres = new ArrayList<>();
         preferredGenresLayout = view.findViewById(R.id.search_flexbox_preferredgenres);
-        for (Genre g : Genre.values()) {
-            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
-
-            genreButton.setText(g.toString());
-            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
-                    if (isChecked)
-                        preferredGenres.add(thisGenre);
-                    else
-                        preferredGenres.remove(thisGenre);
-                }
-            });
-            preferredGenresLayout.addView(genreButton);
-        }
+        Util.populateGenreSelector(preferredGenres, preferredGenresLayout, null);
 
         excludedGenres = new ArrayList<>();
         excludedGenresLayout = view.findViewById(R.id.search_flexbox_excludedgenres);
-        for (Genre g : Genre.values()) {
-            CheckBox genreButton = Util.makeCheckBoxWithMargin(getContext());
-
-            genreButton.setText(g.toString());
-            genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
-                    if (isChecked)
-                        excludedGenres.add(thisGenre);
-                    else
-                        excludedGenres.remove(thisGenre);
-                }
-            });
-            excludedGenresLayout.addView(genreButton);
-        }
+        Util.populateGenreSelector(excludedGenres, excludedGenresLayout, null);
 
         searchButton = view.findViewById(R.id.search_button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {

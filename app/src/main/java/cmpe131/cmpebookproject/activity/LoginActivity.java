@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // this just loads the singleton instance of DbHelper.
-        // makes the rest of the app slightly faster
+        // makes the rest of the app ever-so-slightly faster
         DbHelper.getInstance(getApplicationContext());
 
         createAccIntent = new Intent(this, CreateAccActivity.class);

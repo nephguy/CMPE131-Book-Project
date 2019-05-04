@@ -1,6 +1,7 @@
 package cmpe131.cmpebookproject;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.KeyEvent;
@@ -8,12 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cmpe131.cmpebookproject.book.Genre;
 
 public class Util {
 
@@ -90,23 +96,43 @@ public class Util {
         longToast(ApplicationManager.getContext(), text);
     }
 
-    public AlertDialog.Builder styleFixedAlertDialogBuilder(Context context) {
+    public static AlertDialog.Builder styleFixedAlertDialogBuilder(Context context) {
         return new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.DialogTheme));
     }
 
-    /** only used because of a weird bug with checkboxes made from xml layout files.
-     *
-     *  See {@link cmpe131.cmpebookproject.R.layout#view_checkbox XML CheckBox}
-     * **/
-    public static CheckBox makeCheckBoxWithMargin(Context context) {
-        CheckBox checkBox = new CheckBox(context);
+    public static void populateGenreSelector (final ArrayList<Genre> selectedGenresList, FlexboxLayout selectorLayout, @Nullable ArrayList<Genre> preselectedGenres) {
+        for (Genre g : Genre.values()) {
+            // Must create CheckBox programmatically because of a weird bug with CheckBoxes from XML layout files.
+            // See {@link cmpe131.cmpebookproject.R.layout#view_checkbox XML CheckBox}
+            CheckBox genreCheckBox = new CheckBox(ApplicationManager.getContext());
+            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 32, 16);
+            genreCheckBox.setLayoutParams(params);
 
-        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 32, 16);
-        checkBox.setLayoutParams(params);
+            if (preselectedGenres != null) {
+                if (preselectedGenres.contains(g)) {
+                    selectedGenresList.add(g);
+                    genreCheckBox.setChecked(true);
+                }
+            }
 
-        return checkBox;
+            genreCheckBox.setText(g.toString());
+            genreCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Genre thisGenre = Genre.getEnum(buttonView.getText().toString());
+                    if (isChecked)
+                        selectedGenresList.add(thisGenre);
+                    else
+                        selectedGenresList.remove(thisGenre);
+                }
+            });
+            selectorLayout.addView(genreCheckBox);
+        }
     }
+
+
+    /** Debug methods **/
 
     public static void debugListAllChildViews(View view) {
         if (!(view instanceof ViewGroup)) {
