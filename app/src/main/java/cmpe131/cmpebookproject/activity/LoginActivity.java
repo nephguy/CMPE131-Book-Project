@@ -11,6 +11,7 @@ import cmpe131.cmpebookproject.ApplicationManager;
 import cmpe131.cmpebookproject.FieldFocusTools;
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
+import cmpe131.cmpebookproject.database.DbHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,6 +27,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // this just loads the singleton instance of DbHelper.
+        // makes the rest of the app slightly faster
+        DbHelper.getInstance(getApplicationContext());
 
         createAccIntent = new Intent(this, CreateAccActivity.class);
         loginIntent = new Intent(this, MainActivity.class);

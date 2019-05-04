@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
 
@@ -115,6 +116,14 @@ public class Util {
         }
 
         System.out.println("All views found.");
+    }
+
+    public static void debugPrintList(List<?> list) {
+        System.out.println("LIST CONTENTS: ");
+        for (Object o : list) {
+            System.out.println(o.toString());
+        }
+        System.out.println("END OF LIST");
     }
 
 }

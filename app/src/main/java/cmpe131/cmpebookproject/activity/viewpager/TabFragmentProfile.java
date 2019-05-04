@@ -23,6 +23,7 @@ import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.Genre;
 import cmpe131.cmpebookproject.database.DbHelper;
+import cmpe131.cmpebookproject.recommender.Recommender;
 import cmpe131.cmpebookproject.user.Gender;
 import cmpe131.cmpebookproject.user.ReadingHabits;
 import cmpe131.cmpebookproject.user.User;
@@ -70,17 +71,18 @@ public class TabFragmentProfile extends TabFragmentBase {
         readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
         Util.setSpinnerSelection(readingHabitsSpinner,activeUser.getReadingHabits());
 
-        likedGenres = activeUser.getLikedGenres();
+        likedGenres = new ArrayList<>();
         likedGenresLayout = view.findViewById(R.id.profile_flexbox_likedgenres);
         for (Genre g : Genre.values()) {
             CheckBox genreButton = new CheckBox(getContext());
-
-            if (activeUser.getLikedGenres().contains(g))
-                genreButton.setChecked(true);
-
             ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32, 0, 0, 16);
+            params.setMargins(0, 0, 32, 16);
             genreButton.setLayoutParams(params);
+
+            if (activeUser.getLikedGenres().contains(g)) {
+                likedGenres.add(g);
+                genreButton.setChecked(true);
+            }
 
             genreButton.setText(g.toString());
             genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,17 +98,19 @@ public class TabFragmentProfile extends TabFragmentBase {
             likedGenresLayout.addView(genreButton);
         }
 
-        dislikedGenres = activeUser.getDislikedGenres();
+        dislikedGenres = new ArrayList<>();
         dislikedGenresLayout = view.findViewById(R.id.profile_flexbox_dislikedgenres);
         for (Genre g : Genre.values()) {
             CheckBox genreButton = new CheckBox(getContext());
-
-            if (activeUser.getDislikedGenres().contains(g))
-                genreButton.setChecked(true);
-
             ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(32, 0, 0, 16);
+            params.setMargins(0, 0, 32, 16);
             genreButton.setLayoutParams(params);
+
+            if (activeUser.getDislikedGenres().contains(g)){
+                dislikedGenres.add(g);
+                genreButton.setChecked(true);
+            }
+
 
             genreButton.setText(g.toString());
             genreButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -137,7 +141,7 @@ public class TabFragmentProfile extends TabFragmentBase {
                     return;
                 }
 
-                User editedUser = new User (activeUser);
+                User editedUser = new User(activeUser);
                 if (!name.equals(""))
                     editedUser.setName(name);
                 editedUser.setGender(gender);
@@ -148,13 +152,14 @@ public class TabFragmentProfile extends TabFragmentBase {
                 editedUser.setDislikedGenres(dislikedGenres);
 
                 if (editedUser.equals(activeUser)) {
-                    Toast.makeText(getContext(), "No changes made - did not update user", Toast.LENGTH_SHORT).show();
+                    Util.shortToast(getContext(), "No changes made - did not update user");
                     return;
                 }
-
+                Recommender r = new Recommender(editedUser, DbHelper.getInstance(getContext()).getAllBooks(), 10);
+                editedUser.setRecommendedList(r.produceRecommendedBooks());
                 dbHelper.appendUser(activeUser, editedUser);
 
-                Toast.makeText(getContext(), "User information updated. Please login again", Toast.LENGTH_LONG).show();
+                Util.longToast(getContext(), "User information updated. Please login again");
                 ApplicationManager.logout();
             }
         });
@@ -165,11 +170,11 @@ public class TabFragmentProfile extends TabFragmentBase {
             public void onClick(View v) {
                 if (delete) {
                     dbHelper.deleteUser(activeUser);
-                    Toast.makeText(getContext(),"Account deleted",Toast.LENGTH_LONG).show();
+                    Util.shortToast(getContext(),"Account deleted");
                     ApplicationManager.logout();
                 }
                 else {
-                    Toast.makeText(getContext(),"Press again to delete account",Toast.LENGTH_LONG).show();
+                    Util.longToast(getContext(),"Press again to delete account");
                     delete = true;
                 }
             }

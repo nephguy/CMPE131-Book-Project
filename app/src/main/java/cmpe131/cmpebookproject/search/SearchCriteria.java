@@ -167,8 +167,8 @@ public class SearchCriteria implements Parcelable {
 
         // do easy quantitative exclusions first - page count and publish year limits
         // but first check if they are even necessary
-        boolean skipPrelimSearch = (publishYearFloor == 0) && (publishYearCeiling == 0) && (pcountFloor == 0) && (pcountCeiling == 0);
-        if (skipPrelimSearch) {
+        boolean skipSimpleSearch = (publishYearFloor == 0) && (publishYearCeiling == 0) && (pcountFloor == 0) && (pcountCeiling == 0);
+        if (skipSimpleSearch) {
             searchResults = searchSpace;
         }
         else {

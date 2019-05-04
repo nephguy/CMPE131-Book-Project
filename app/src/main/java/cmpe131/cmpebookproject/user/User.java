@@ -81,6 +81,7 @@ public class User implements Serializable, Parcelable {
     public void setRatedBooks(ArrayList<Book> ratedBooks) {this.ratedBooks = ratedBooks;}
     public BookList getRecommendedList() {return recommendedList;}
     public void setRecommendedList(BookList recommendedList) {this.recommendedList = recommendedList;}
+    public void setRecommendedList(ArrayList<Book> recommendedList) {this.recommendedList = new BookList("Recommended Books", recommendedList);}
     public ArrayList<BookList> getCustomLists() {return customLists;}
     public void addCustomList(BookList newList) {this.customLists.add(newList);}
     public boolean appendCustomList(Book book, int listIndex) {
@@ -109,18 +110,18 @@ public class User implements Serializable, Parcelable {
     public boolean equals (Object obj) {
         if (!(obj instanceof User))
             return false;
-        User u = (User)obj;
+        User other = (User)obj;
 
-        boolean sameName = this.name.equals(u.name);
-        boolean samePass = this.passwordHash == u.passwordHash;
-        boolean sameGender = this.gender.equals(u.gender);
-        boolean sameAge = this.age == u.age;
-        boolean sameReadingHabits = this.readingHabits.equals(u.readingHabits);
-        boolean sameLikedGenres = this.likedGenres.equals(u.likedGenres);
-        boolean sameDislikedGenres = this.dislikedGenres.equals(u.dislikedGenres);
-        boolean sameRatedBooks = this.ratedBooks.equals(u.ratedBooks);
-        boolean sameRecommendedList = this.recommendedList.equals(u.recommendedList);
-        boolean sameCustomLists = this.customLists.equals(u.customLists);
+        boolean sameName = this.name.equals(other.name);
+        boolean samePass = this.passwordHash == other.passwordHash;
+        boolean sameGender = this.gender.equals(other.gender);
+        boolean sameAge = this.age == other.age;
+        boolean sameReadingHabits = this.readingHabits.equals(other.readingHabits);
+        boolean sameLikedGenres = this.likedGenres.equals(other.likedGenres);
+        boolean sameDislikedGenres = this.dislikedGenres.equals(other.dislikedGenres);
+        boolean sameRatedBooks = this.ratedBooks.equals(other.ratedBooks);
+        boolean sameRecommendedList = this.recommendedList.equals(other.recommendedList);
+        boolean sameCustomLists = this.customLists.equals(other.customLists);
 
         return (sameName && samePass && sameGender && sameAge && sameReadingHabits && sameLikedGenres && sameDislikedGenres && sameRatedBooks && sameRecommendedList && sameCustomLists);
     }

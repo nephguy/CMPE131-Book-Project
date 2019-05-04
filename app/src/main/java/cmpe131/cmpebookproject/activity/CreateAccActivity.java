@@ -142,7 +142,8 @@ public class CreateAccActivity extends AppCompatActivity {
                 // create user, save, and return
                 User newUser = new User(name, pass, gender, Integer.parseInt(ageString), readingHabits, likedGenres, dislikedGenres, new ArrayList<Book>(), new BookList("Recommended"), new ArrayList<BookList>());
                 Recommender r = new Recommender(newUser, DbHelper.getInstance(getApplicationContext()).getAllBooks(), 10);
-                r.makeRecommendedBookList();
+                //r.makeRecommendedBookList();
+                newUser.setRecommendedList(new BookList("Recommended Books", r.produceRecommendedBooks()));
 
                 DbHelper.getInstance(getApplicationContext()).addUser(newUser);
 
