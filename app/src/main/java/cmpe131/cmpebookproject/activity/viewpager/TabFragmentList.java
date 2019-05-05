@@ -1,16 +1,10 @@
 package cmpe131.cmpebookproject.activity.viewpager;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-
-import java.util.ArrayList;
 
 import cmpe131.cmpebookproject.R;
 import cmpe131.cmpebookproject.RecyclerViewListableAdapter;
@@ -20,24 +14,16 @@ import cmpe131.cmpebookproject.book.Book;
 
 public class TabFragmentList extends TabFragmentBase {
 
-    ArrayList<Book> recommendedBooks;
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        recommendedBooks = activeUser.getRecommendedList();
-    }
+    public void onStart() {
+        super.onStart();
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab_list, container, false);
-
-        RecyclerView recommendedList = view.findViewById(R.id.tab_list_layout_listrecyclerview);
+        RecyclerView recommendedList = getView().findViewById(R.id.tab_list_layout_listrecyclerview);
         recommendedList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         RecyclerViewListableAdapter recyclerViewAdapter = new RecyclerViewListableAdapter(activeUser.getRecommendedList(), R.layout.listitem_book/*recommendedBooks.get(0).getListViewLayoutRes()*/, true);
         recommendedList.setAdapter(recyclerViewAdapter);
 
-        Button customListsButton = view.findViewById(R.id.tab_list_button_customlists);
+        Button customListsButton = getView().findViewById(R.id.tab_list_button_customlists);
         customListsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,8 +35,5 @@ public class TabFragmentList extends TabFragmentBase {
                 startActivity(userListsIntent);
             }
         });
-
-        return view;
     }
-
 }

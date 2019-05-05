@@ -2,15 +2,11 @@ package cmpe131.cmpebookproject.activity.viewpager;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -53,34 +49,33 @@ public class TabFragmentProfile extends TabFragmentBase {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab_profile, container, false);
-        FieldFocusTools.setAllFieldsClearFocusOnFinish((ViewGroup)view.findViewById(R.id.profile_layout_const));
+    public void onStart() {
+        super.onStart();
+        FieldFocusTools.setAllFieldsClearFocusOnFinish((ViewGroup)getView().findViewById(R.id.profile_layout_const));
 
-
-        usernameField = view.findViewById(R.id.profile_field_username);
+        usernameField = getView().findViewById(R.id.profile_field_username);
         usernameField.setHint(activeUser.getName());
 
-        ageField = view.findViewById(R.id.profile_field_age);
+        ageField = getView().findViewById(R.id.profile_field_age);
         ageField.setHint(Integer.toString(activeUser.getAge()));
 
-        genderSpinner = view.findViewById(R.id.profile_spinner_gender);
+        genderSpinner = getView().findViewById(R.id.profile_spinner_gender);
         genderSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Gender.values()));
         Util.setSpinnerSelection(genderSpinner,activeUser.getGender());
 
-        readingHabitsSpinner = view.findViewById(R.id.profile_spinner_readinghabits);
+        readingHabitsSpinner = getView().findViewById(R.id.profile_spinner_readinghabits);
         readingHabitsSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, ReadingHabits.values()));
         Util.setSpinnerSelection(readingHabitsSpinner,activeUser.getReadingHabits());
 
         likedGenres = new ArrayList<>();
-        likedGenresLayout = view.findViewById(R.id.profile_flexbox_likedgenres);
+        likedGenresLayout = getView().findViewById(R.id.profile_flexbox_likedgenres);
         Util.populateGenreSelector(likedGenres, likedGenresLayout, activeUser.getLikedGenres());
 
         dislikedGenres = new ArrayList<>();
-        dislikedGenresLayout = view.findViewById(R.id.profile_flexbox_dislikedgenres);
+        dislikedGenresLayout = getView().findViewById(R.id.profile_flexbox_dislikedgenres);
         Util.populateGenreSelector(dislikedGenres, dislikedGenresLayout, activeUser.getDislikedGenres());
 
-        updateButton = view.findViewById(R.id.profile_button_update);
+        updateButton = getView().findViewById(R.id.profile_button_update);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +112,7 @@ public class TabFragmentProfile extends TabFragmentBase {
             }
         });
 
-        deleteButton = view.findViewById(R.id.profile_button_delete);
+        deleteButton = getView().findViewById(R.id.profile_button_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,8 +137,6 @@ public class TabFragmentProfile extends TabFragmentBase {
                 }
             }
         });
-
-        return view;
     }
 
     @Override

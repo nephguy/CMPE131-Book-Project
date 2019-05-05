@@ -42,7 +42,7 @@ public class DbHelper {
 
 
     private Book parseBook (String bookData) {
-        String[] bookparam = parseCsvData(bookData);
+        String[] bookparam = parseCsvString(bookData);
         return new Book(bookparam[0],
                 bookparam[1],
                 bookparam[2],
@@ -55,7 +55,7 @@ public class DbHelper {
 
     // because some data values have commas in them, so they can't easily be retrieved.
     // those that do are surrounded by quotes
-    private String[] parseCsvData (String csvData) {
+    private String[] parseCsvString(String csvData) {
         ArrayList<String> data = new ArrayList<>();
 
         // find each value and cut it out
@@ -105,7 +105,7 @@ public class DbHelper {
         return getUser(username, password.hashCode());
     }
 
-    public User getUser (String username, int passwordHash) {
+    private User getUser (String username, int passwordHash) {
         for (User u : userDb.getUserList()) {
             boolean userMatch = u.getName().equals(username);
             boolean passMatch = (u.getPasswordHash() == passwordHash);

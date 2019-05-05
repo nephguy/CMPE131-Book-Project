@@ -4,9 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import cmpe131.cmpebookproject.R;
+
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    static final int numTabs = 3;
+    private static final int numTabs = 3;
 
     public TabFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -16,11 +18,11 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TabFragmentList();
+                return TabFragmentBase.newInstance(TabFragmentList.class, R.layout.fragment_tab_list);
             case 1:
-                return new TabFragmentSearch();
+                return TabFragmentBase.newInstance(TabFragmentSearch.class, R.layout.fragment_tab_search);
             case 2:
-                return new TabFragmentProfile();
+                return TabFragmentBase.newInstance(TabFragmentProfile.class, R.layout.fragment_tab_profile);
             default:
                 return null;
         }

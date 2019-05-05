@@ -1,33 +1,51 @@
 package cmpe131.cmpebookproject.activity.viewpager;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import cmpe131.cmpebookproject.ApplicationManager;
 import cmpe131.cmpebookproject.user.User;
 
 public abstract class TabFragmentBase extends Fragment {
 
+    private static final String KEY_LAYOUT_RES = "KEY_LAYOUT_RES";
+
     User activeUser;
+    @LayoutRes int layoutRes;
 
-    /** Block commented code is deprecated, but kept for posterity. It was good code. RIP. **/
 
-    /*
     // newInstance constructor for creating fragment with arguments
-    public static TabFragmentList newInstance(User user) {
-        TabFragmentList tabBaseFragment = new TabFragmentList();
-        Bundle args = new Bundle();
-        args.putParcelable(Util.KEY_DATA_ACTIVEUSER, user);
-        tabBaseFragment.setArguments(args);
-        return tabBaseFragment;
+    public static TabFragmentBase newInstance(Class<? extends TabFragmentBase> tabFragmentClass, @LayoutRes int layoutRes) {
+        TabFragmentBase tabFragment = null;
+        try {
+            tabFragment = tabFragmentClass.newInstance();
+            Bundle args = new Bundle();
+            args.putInt(KEY_LAYOUT_RES, layoutRes);
+            tabFragment.setArguments(args);
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return tabFragment;
     }
-    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //activeUser = getArguments().getParcelable(Util.KEY_DATA_ACTIVEUSER);
+        layoutRes = getArguments().getInt(KEY_LAYOUT_RES);
         activeUser = ApplicationManager.getActiveUser();
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(layoutRes, container, false);
     }
 
     @Override

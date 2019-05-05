@@ -23,7 +23,7 @@ public class ApplicationManager extends Application {
     }
 
     /**
-     * Returns the application context
+     * Returns the application context.
      *
      * @return application context
      */
@@ -31,23 +31,32 @@ public class ApplicationManager extends Application {
         return sContext;
     }
 
+    /**
+     * Returns the active user.
+     *
+     * @throws cmpe131.cmpebookproject.database.UserReadWriteException if there is no active user
+     * @return application context
+     */
     public static User getActiveUser() {
         if (sActiveUser == null)
             throw new UserReadWriteException("WARNING: ACTIVE USER IS NULL. WILL CAUSE FATAL ERRORS.");
         return sActiveUser;
     }
 
+    /**
+     * Attempts to set the active user based on the given login credentials
+     *
+     * @return true if the login was successful, false if not
+     */
     public static boolean login(String username, String password) {
-        User loginUser = DbHelper.getInstance(sContext).getUser(username, password);
-        if (loginUser == null) {
-            return false;
-        }
-        else {
-            sActiveUser = loginUser;
-            return true;
-        }
+        sActiveUser = DbHelper.getInstance(sContext).getUser(username, password);
+        return sActiveUser != null;
     }
 
+    /**
+     * Logs out of the current active user, goes to the login activity, and clears the activity chain
+     * Essentially resets the app
+     */
     public static void logout() {
         sActiveUser = null;
         Intent logoutIntent = new Intent(sContext, LoginActivity.class);

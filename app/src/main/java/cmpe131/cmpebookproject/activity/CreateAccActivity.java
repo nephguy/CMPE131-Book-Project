@@ -50,6 +50,11 @@ public class CreateAccActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createacc);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         FieldFocusTools.setAllFieldsPassFocusOnFinish((ViewGroup)findViewById(R.id.createacc_layout_const));
 
         usernameField = findViewById(R.id.createacc_field_username);

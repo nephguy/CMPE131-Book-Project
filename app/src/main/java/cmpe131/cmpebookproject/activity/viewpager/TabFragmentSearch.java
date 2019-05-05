@@ -1,14 +1,9 @@
 package cmpe131.cmpebookproject.activity.viewpager;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -37,33 +32,27 @@ public class TabFragmentSearch extends TabFragmentBase {
     ArrayList<Genre> excludedGenres;
     Button searchButton;
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onStart() {
+        super.onStart();
+        FieldFocusTools.setAllFieldsPassFocusOnFinish((ViewGroup)getView().findViewById(R.id.search_layout_const));
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab_search, container, false);
-        FieldFocusTools.setAllFieldsPassFocusOnFinish((ViewGroup)view.findViewById(R.id.search_layout_const));
-
-        title = view.findViewById(R.id.search_field_title);
-        author = view.findViewById(R.id.search_field_author);
-        publishYearFloor = view.findViewById(R.id.search_field_publishfloor);
-        publishYearCeiling = view.findViewById(R.id.search_field_publishceiling);
-        pcountFloor = view.findViewById(R.id.search_field_pagefloor);
-        pcountCeiling = view.findViewById(R.id.search_field_pageceiling);
+        title = getView().findViewById(R.id.search_field_title);
+        author = getView().findViewById(R.id.search_field_author);
+        publishYearFloor = getView().findViewById(R.id.search_field_publishfloor);
+        publishYearCeiling = getView().findViewById(R.id.search_field_publishceiling);
+        pcountFloor = getView().findViewById(R.id.search_field_pagefloor);
+        pcountCeiling = getView().findViewById(R.id.search_field_pageceiling);
 
         preferredGenres = new ArrayList<>();
-        preferredGenresLayout = view.findViewById(R.id.search_flexbox_preferredgenres);
+        preferredGenresLayout = getView().findViewById(R.id.search_flexbox_preferredgenres);
         Util.populateGenreSelector(preferredGenres, preferredGenresLayout, null);
 
         excludedGenres = new ArrayList<>();
-        excludedGenresLayout = view.findViewById(R.id.search_flexbox_excludedgenres);
+        excludedGenresLayout = getView().findViewById(R.id.search_flexbox_excludedgenres);
         Util.populateGenreSelector(excludedGenres, excludedGenresLayout, null);
 
-        searchButton = view.findViewById(R.id.search_button_search);
+        searchButton = getView().findViewById(R.id.search_button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,8 +80,5 @@ public class TabFragmentSearch extends TabFragmentBase {
                 startActivity(searchIntent);
             }
         });
-
-
-        return view;
     }
 }
