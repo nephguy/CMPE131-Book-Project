@@ -8,7 +8,6 @@ import android.view.View;
 import cmpe131.cmpebookproject.Util;
 import cmpe131.cmpebookproject.book.BookList;
 import cmpe131.cmpebookproject.database.DbHelper;
-import cmpe131.cmpebookproject.user.User;
 
 public class ListActivityBookList extends ListActivityBase {
 
