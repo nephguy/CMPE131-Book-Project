@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordField;
     Button loginButton;
     Button createaccButton;
+    int failCount = 0;
 
     Intent createAccIntent;
     Intent loginIntent;
@@ -30,6 +31,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // this just loads the singleton instance of DbHelper.
         // makes the rest of the app ever-so-slightly faster
+
+        /*
+         Limit the number of times a user can fill wrong password
+         */
+
         DbHelper.getInstance(getApplicationContext());
 
         createAccIntent = new Intent(this, CreateAccActivity.class);
@@ -39,10 +45,22 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ApplicationManager.login(usernameField.getText().toString(), passwordField.getText().toString()))
+                if (ApplicationManager.login(usernameField.getText().toString(), passwordField.getText().toString()) && failCount < 5)
                     startActivity(loginIntent);
-                else
-                    Util.shortToast(getApplicationContext(),"Invalid Login Credentials");
+                else {
+                    failCount++;
+                    String message;
+                    int leftCount = 5 - failCount;
+                    if(leftCount > 0 )
+                    {
+                         message = "Invalid Login Credentials : No. Attempts Left - "  +  leftCount;
+                    }
+                    else
+                    {
+                         message = "No Attempts left restart App";
+                    }
+                    Util.shortToast(getApplicationContext(), message);
+                }
             }
         });
 
