@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import cmpe131.cmpebookproject.ApplicationManager;
 import cmpe131.cmpebookproject.FieldFocusTools;
 import cmpe131.cmpebookproject.R;
@@ -19,7 +22,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordField;
     Button loginButton;
     Button createaccButton;
+
     int failCount = 0;
+    boolean preventLoginAttempt = false;
+    Timer preventLoginTimer;
 
     Intent createAccIntent;
     Intent loginIntent;
@@ -31,11 +37,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // this just loads the singleton instance of DbHelper.
         // makes the rest of the app ever-so-slightly faster
-
-        /*
-         Limit the number of times a user can fill wrong password
-         */
-
         DbHelper.getInstance(getApplicationContext());
 
         createAccIntent = new Intent(this, CreateAccActivity.class);
@@ -45,22 +46,30 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ApplicationManager.login(usernameField.getText().toString(), passwordField.getText().toString()) && failCount < 5)
-                    startActivity(loginIntent);
-                else {
-                    failCount++;
-                    String message;
-                    int leftCount = 5 - failCount;
-                    if(leftCount > 0 )
-                    {
-                         message = "Invalid Login Credentials : No. Attempts Left - "  +  leftCount;
-                    }
-                    else
-                    {
-                         message = "No Attempts left restart App";
-                    }
-                    Util.shortToast(getApplicationContext(), message);
+                if (preventLoginAttempt) {
+                    Util.shortToast(getApplicationContext(), "Login attempt prevented. Please wait");
+                    return;
                 }
+
+                boolean loginSuccessful = ApplicationManager.login(usernameField.getText().toString(), passwordField.getText().toString());
+                if (loginSuccessful)
+                    startActivity(loginIntent);
+                else if ( ((++failCount)%5) != 0 ) // if this is not the 5nth failure, allow another attempt
+                    Util.shortToast(getApplicationContext(), "Invalid Login Credentials");
+                else { // if this is the 5nth failure, prevent login for n*10 seconds
+                    int loginDelay = (failCount/5)*10;
+                    Util.shortToast(getApplicationContext(), "Too many failed login attempts. Please wait " + loginDelay + " seconds before trying again");
+                    preventLoginAttempt = true;
+                    preventLoginTimer = new Timer();
+                    preventLoginTimer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            preventLoginAttempt = false;
+                            preventLoginTimer.cancel();
+                        }
+                    }, loginDelay*1000);
+                }
+
             }
         });
 
