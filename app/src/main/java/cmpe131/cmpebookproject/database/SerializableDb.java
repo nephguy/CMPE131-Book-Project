@@ -39,7 +39,7 @@ class SerializableDb<T> {
             objOut.close();
             fileOut.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // error occurred
         }
         return true;
     }
